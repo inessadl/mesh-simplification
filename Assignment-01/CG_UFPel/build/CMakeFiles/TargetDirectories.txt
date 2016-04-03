@@ -1,0 +1,7 @@
+/home/inessa/projects/computer-graphics/Assignment-01/CG_UFPel/build/external/CMakeFiles/ANTTWEAKBAR_116_OGLCORE_GLFW.dir
+/home/inessa/projects/computer-graphics/Assignment-01/CG_UFPel/build/external/assimp-3.0.1270/contrib/zlib/CMakeFiles/zlib.dir
+/home/inessa/projects/computer-graphics/Assignment-01/CG_UFPel/build/external/glfw-3.0.3/docs/CMakeFiles/docs.dir
+/home/inessa/projects/computer-graphics/Assignment-01/CG_UFPel/build/external/assimp-3.0.1270/code/CMakeFiles/assimp.dir
+/home/inessa/projects/computer-graphics/Assignment-01/CG_UFPel/build/CMakeFiles/CG_UFPel.dir
+/home/inessa/projects/computer-graphics/Assignment-01/CG_UFPel/build/external/CMakeFiles/GLEW_190.dir
+/home/inessa/projects/computer-graphics/Assignment-01/CG_UFPel/build/external/glfw-3.0.3/src/CMakeFiles/GLFW_303.dir
