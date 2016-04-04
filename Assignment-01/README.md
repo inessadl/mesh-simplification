@@ -1,7 +1,5 @@
 # Assignment 01
 
-## Description
-
 Implement a simple mesh simplification using:
 
 - priority queue
