@@ -137,6 +137,7 @@ int main(void)
 	std::vector<glm::vec3> indexed_normals;
 	indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
 
+	// Instance of MeshSimplification class
 	MeshSimplification ms;
 
 
@@ -174,18 +175,20 @@ int main(void)
 	do {
         check_gl_error();
 
-        //use the control key to free the mouse
+		// uses the control key to change the view of the object
 		if (glfwGetKey(g_pWindow, GLFW_KEY_LEFT_CONTROL) != GLFW_PRESS)
 			nUseMouse = 0;
 		else
 			nUseMouse = 1;
 
+		// Executes simplification by pressing the "I" key
 		if (glfwGetKey(g_pWindow, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
 		{
 			if(glfwGetKey(g_pWindow, GLFW_KEY_I) == GLFW_PRESS)
 			{
 				if(glfwGetKey(g_pWindow, GLFW_KEY_I) == GLFW_RELEASE)
 				{
+					// Calls removeVertex from MeshSimplification
 					ms.removeVertex(indices, indexed_vertices);
 				}
 			}
@@ -307,4 +310,3 @@ int main(void)
 
 	return 0;
 }
-
