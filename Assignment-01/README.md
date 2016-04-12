@@ -16,7 +16,7 @@ $ make all
 $ cd ../..
 $ mkdir build
 $ cd build
-$ cmake
+$ cmake ..
 $ make all
 ```
 
