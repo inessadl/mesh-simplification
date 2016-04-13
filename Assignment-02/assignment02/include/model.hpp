@@ -6,7 +6,7 @@
 #define CG_UFPEL_MODEL_H
 
 
-class model
+class Model
 {
 
 };
