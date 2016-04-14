@@ -17,7 +17,8 @@ private:
     std::vector<glm::vec3> indexed_vertices;
     std::vector<glm::vec2> indexed_uvs;
     std::vector<glm::vec3> indexed_normals;
-    GLuint ModelMatrixID;
+//    GLuint ModelMatrixID;
+
 
     GLuint vertexbuffer;
     GLuint uvbuffer;
@@ -33,6 +34,7 @@ public:
     GLuint * getUvBuffer() const;
     GLuint * getNormalBuffer() const;
     GLuint * getElementBuffer() const;
+    GLuint * getID() const;
 
     std::vector<glm::vec3> * getIndexedVertices() const;
     std::vector<glm::vec2> * getIndexedUvs() const;
@@ -45,9 +47,13 @@ public:
     void setIndexedUvs(const std::vector<glm::vec2> &);
     void setIndexedNormals(const std::vector<glm::vec3> &);
 
+    void loadMesh();
+    void unloadMesh();
+
     // Bind Buffers
-    void bindBufferChannel(int);
-//	void CleanBuffer();
+
+    //void bindBufferChannel(int);
+    //	void CleanBuffer();
 
 
 };

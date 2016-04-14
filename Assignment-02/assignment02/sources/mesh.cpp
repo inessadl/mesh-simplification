@@ -40,17 +40,77 @@ Mesh::Mesh(const char * path)
 
 }
 
-GLuint * Mesh::getVertexBuffer()  const   { return &vertexbuffer; }
-GLuint * Mesh::getUvBuffer()      const   { return &uvbuffer; }
-GLuint * Mesh::getNormalBuffer()  const   { return &normalbuffer; }
-GLuint * Mesh::getElementBuffer() const   { return &elementbuffer; }
+
+void Mesh::loadMesh()
+{
+    if (vertexBuffer != NULL)
+    {
+        // 1rst attribute buffer : vertices
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+        glVertexAttribPointer(
+                0,                  // attribute
+                3,                  // size
+                GL_FLOAT,           // type
+                GL_FALSE,           // normalized?
+                0,                  // stride
+                (void*)0            // array buffer offset
+        );
+    }
+
+
+    if (uvbuffer != NULL)
+    {
+        // 2nd attribute buffer : UVs
+        glEnableVertexAttribArray(1);
+        glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
+        glVertexAttribPointer(
+                1,                                // attribute
+                2,                                // size
+                GL_FLOAT,                         // type
+                GL_FALSE,                         // normalized?
+                0,                                // stride
+                (void*)0                          // array buffer offset
+        );
+    }
+
+
+    if (normalbuffer != NULL)
+    {
+        // 3rd attribute buffer : normals
+        glEnableVertexAttribArray(2);
+        glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+        glVertexAttribPointer(
+                2,                                // attribute
+                3,                                // size
+                GL_FLOAT,                         // type
+                GL_FALSE,                         // normalized?
+                0,                                // stride
+                (void*)0                          // array buffer offset
+        );
+    }
+
+}
+
+void Mesh::unloadMesh ()
+{
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
+}
+
+GLuint * Mesh::getVertexBuffer()    const   { return &vertexbuffer; }
+GLuint * Mesh::getUvBuffer()        const   { return &uvbuffer; }
+GLuint * Mesh::getNormalBuffer()    const   { return &normalbuffer; }
+GLuint * Mesh::getElementBuffer()   const   { return &elementbuffer; }
+GLuint * Mesh::getID()              const   { return; }
 
 std::vector<glm::vec3> * Mesh::getIndexedVertices()   const   { return &indexed_vertices; }
 std::vector<glm::vec2> * Mesh::getIndexedUvs()        const   { return &indexed_uvs; }
 std::vector<glm::vec3> * Mesh::getIndexedNormals()    const   { return &indexed_normals; }
 std::vector<unsigned short> * Mesh::getIndices()      const   { return &indices; }
 
-void Mesh::setIndices(const std::vector<unsigned short> &)    {}
-void Mesh::setIndexedVertices(const std::vector<glm::vec3> &) {}
-void Mesh::setIndexedUvs(const std::vector<glm::vec2> &)      {}
-void Mesh::setIndexedNormals(const std::vector<glm::vec3> &)  {}
+void Mesh::setIndices(const std::vector<unsigned short> &indices)       {  Mesh::indices = indices; }
+void Mesh::setIndexedVertices(const std::vector<glm::vec3> &vertices)   { Mesh::indexed_vertices = vertices; }
+void Mesh::setIndexedUvs(const std::vector<glm::vec2> &uvs)             { Mesh::indexed_uvs = uvs; }
+void Mesh::setIndexedNormals(const std::vector<glm::vec3> &normals)     { Mesh::indexed_normals = normals; }

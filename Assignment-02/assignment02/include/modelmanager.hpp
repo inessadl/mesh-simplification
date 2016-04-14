@@ -8,8 +8,8 @@
 
 class ModelManager
 {
-
-
+public:
+    ~ModelManager();
 };
 
 
