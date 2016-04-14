@@ -4,17 +4,22 @@
 
 #include <objloader.hpp>
 #include <vboindexer.hpp>
+#include <vboindexer.hpp>
+// Include GLEW
+#include <GL/glew.h>
 #include "mesh.hpp"
 
 
-Mesh::Mesh(const char * path)
+Mesh::Mesh(const char * path, int id)
 {
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> uvs;
     std::vector<glm::vec3> normals;
 
+    Mesh::id = id;
+
     // Load it into a VBO
-    bool res = loadOBJ(path, vertices, uvs, normals);
+    loadOBJ(path, vertices, uvs, normals);
     indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
 
     // GLuint vertexbuffer;
@@ -40,6 +45,18 @@ Mesh::Mesh(const char * path)
 
 }
 
+Mesh::~Mesh ()
+{
+    // 	Cleanup VBO and shader
+    glDeleteBuffers(1, &vertexbuffer);
+    glDeleteBuffers(1, &uvbuffer);
+    glDeleteBuffers(1, &normalbuffer);
+    glDeleteBuffers(1, &elementbuffer);
+
+//    glDeleteProgram(programID);
+//    glDeleteTextures(1, &Texture);
+//    glDeleteVertexArrays(1, &VertexArrayID);
+}
 
 void Mesh::loadMesh()
 {
@@ -114,3 +131,5 @@ void Mesh::setIndices(const std::vector<unsigned short> &indices)       {  Mesh:
 void Mesh::setIndexedVertices(const std::vector<glm::vec3> &vertices)   { Mesh::indexed_vertices = vertices; }
 void Mesh::setIndexedUvs(const std::vector<glm::vec2> &uvs)             { Mesh::indexed_uvs = uvs; }
 void Mesh::setIndexedNormals(const std::vector<glm::vec3> &normals)     { Mesh::indexed_normals = normals; }
+
+int Mesh::getId() const { return Mesh::id; }

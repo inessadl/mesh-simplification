@@ -4,8 +4,19 @@
 
 #include "model.hpp"
 
-Model::Model() {}
+Model::Model(char * texturePath, char * textureSampler, GLuint programID, int meshID)
+{
+    texture = loadDDS(texturePath);
+    modelMatrixID = glGetUniformLocation(programID, "M");
+    textureID = glGetUniformLocation(programID, textureSampler);
 
+    Model::meshID = meshID;
+}
+
+Model::~Model()
+{
+
+}
 
 // void Model::CleanBuffer()
 // {

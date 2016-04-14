@@ -3,34 +3,88 @@
 //
 
 #include "modelmanager.hpp"
+#include <shader.hpp>
+#include <controls.hpp>
 
-void ModelManager ()
+void ModelManager::ModelManager (char* vertexShaders, char* fragmentShaders, char* lightPosition)
 {
-    // Initialize the GUI
-    TwInit(TW_OPENGL_CORE, NULL);
-    TwWindowSize(g_nWidth, g_nHeight);
+    LightID = glGetUniformLocation(programID, lightPosition);
+    programID = LoadShaders(vertexShaders, fragmentShaders);
+    glGenerateVertextArrays(1, &vertexArrayID);
+    glBindVertexArray(vertexArrayID);
 
-    // Set GLFW event callbacks. I removed glfwSetWindowSizeCallback for conciseness
-    glfwSetMouseButtonCallback(g_pWindow, (GLFWmousebuttonfun)TwEventMouseButtonGLFW); // - Directly redirect GLFW mouse button events to AntTweakBar
-    glfwSetCursorPosCallback(g_pWindow, (GLFWcursorposfun)TwEventMousePosGLFW);          // - Directly redirect GLFW mouse position events to AntTweakBar
-    glfwSetScrollCallback(g_pWindow, (GLFWscrollfun)TwEventMouseWheelGLFW);    // - Directly redirect GLFW mouse wheel events to AntTweakBar
-    glfwSetKeyCallback(g_pWindow, (GLFWkeyfun)TwEventKeyGLFW);                         // - Directly redirect GLFW key events to AntTweakBar
-    glfwSetCharCallback(g_pWindow, (GLFWcharfun)TwEventCharGLFW);                      // - Directly redirect GLFW char events to AntTweakBar
-    glfwSetWindowSizeCallback(g_pWindow, WindowSizeCallBack);
+    matrixID = glGetUniformLocation(programID, "MVP");
+    viewMatrixID = glGetUniformLocation(programID, "V");
+}
 
-    //create the toolbar
-    g_pToolBar = TwNewBar("CG UFPel ToolBar");
-    // Add 'speed' to 'bar': it is a modifable (RW) variable of type TW_TYPE_DOUBLE. Its key shortcuts are [s] and [S].
-    double speed = 0.0;
-    TwAddVarRW(g_pToolBar, "speed", TW_TYPE_DOUBLE, &speed, " label='Rot speed' min=0 max=2 step=0.01 keyIncr=s keyDecr=S help='Rotation speed (turns/second)' ");
-    // Add 'bgColor' to 'bar': it is a modifable variable of type TW_TYPE_COLOR3F (3 floats color)
-    vec3 oColor(0.0f);
-    TwAddVarRW(g_pToolBar, "bgColor", TW_TYPE_COLOR3F, &oColor[0], " label='Background color' ");
+GLuint ModelManager::getVertexArrayID()
+{
+    return vertexArrayID;
+}
 
-    // Ensure we can capture the escape key being pressed below
-    glfwSetInputMode(g_pWindow, GLFW_STICKY_KEYS, GL_TRUE);
-    glfwSetCursorPos(g_pWindow, g_nWidth / 2, g_nHeight / 2);
+GLuint ModelManager::getProgramID()
+{
+    return vertexArrayID;
+}
 
-    // Dark blue background
-    glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+GLuint ModelManager::generateMVP(Model &model)
+{
+    ModelManager::projectionMatrix = getProjectionMatrix();
+    ModelManager::viewMatrix = getViewMatrix();
+    ModelManager::MVP = projectionMatrix * viewMatrix * model.getModelMatrix();
+}
+
+glm::mat4 ModelManager::getProjectionMatrix()
+{
+    return ModelManager::projectionMatrix;
+}
+
+glm::mat4 ModelManager::getViewMatrix()
+{
+    return ModelManager::viewMatrix;
+}
+
+GLuint ModelManager::getMatrixID()
+{
+    return ModelManager::viewMatrixID;
+}
+
+void ModelManager::setProjectionMatrix(glm::mat4 projectionMatrix)
+{
+    ModelManager::projectionMatrix = projectionMatrix;
+}
+
+void ModelManager::setViewMatrix(glm::mat4 viewMatrix)
+{
+    ModelManager::viewMatrix = viewMatrix;
+}
+
+void ModelManager::loadMesh(char* path)
+{
+    ModelManager::meshes.push_back(Mesh(path, meshes.size()));
+}
+
+void ModelManager::InitializeMesh(Mesh &mesh)
+{
+    mesh.loadMesh();
+}
+
+void ModelManager::setLightPosition(glm::vec3 lightPos = glm::vec3(4, 4, 4))
+{
+    glUniform3f(lightID, lightPos.x, lightPos.y, lightPos.z);
+}
+
+void ModelManager::activateTexture(Model &model)
+{
+    // Bind our texture in Texture Unit 0
+    glActiveTexture(GL_TEXTURE0);  // Model
+    glBindTexture(GL_TEXTURE_2D, model.getTexture()); // Model
+    // Set our texture sampler to user Texture Unit 0
+    glUniform1i(model.getTextureID(), 0); // Model
+}
+
+
+void ModelManager::Draw()
+{
+
 }

@@ -5,21 +5,37 @@
 #ifndef CG_UFPEL_MODEL_H
 #define CG_UFPEL_MODEL_H
 
+#include<vector>
+#include <GL/glew.h>
+#include <glm/glm.hpp>
 
 class Model
 {
-  glm::mat4 ModelMatrix;
-  GLuint texture;
-  GLuint textureID;
-  const int meshID;
+    glm::mat4 modelMatrix;
+    GLuint modelMatrixID;
+    GLuint texture;
+    GLuint textureID;
+    const int meshID;
 
 public:
-  glm::mat4 getModelMatrix() const;
-  GLuint getTexture() const;
-  GLuint getTextureID() const;
-  void queueTransformation();
-  void applyTransformation();
-  void bindTexture();
+    Model(char*, char*, GLuint, int);
+    ~Model();
+
+    // Getters
+    glm::mat4 getModelMatrix() const;
+    GLuint getModelMatrixID() const;
+    GLuint getTexture() const;
+    GLuint getTextureID() const;
+    GLuint getMeshID() const;
+
+    // Setters
+    void setModelMatrixID(GLuint);
+//    void setTexture(GLuint);
+    void setTextureID(GLuint);
+
+    void queueTransformation();
+    void applyTransformation();
+    void bindTexture();
 };
 
 
