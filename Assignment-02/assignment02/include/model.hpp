@@ -9,6 +9,12 @@
 class Model
 {
 
+public:
+	~Model();
+
+	void CleanBuffer();
+
+
 };
 
 

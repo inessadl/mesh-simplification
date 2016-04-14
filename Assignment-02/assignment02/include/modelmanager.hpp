@@ -6,7 +6,9 @@
 #define CG_UFPEL_MODELMANAGER_H
 
 
-class modelmanager {
+class ModelManager
+{
+
 
 };
 

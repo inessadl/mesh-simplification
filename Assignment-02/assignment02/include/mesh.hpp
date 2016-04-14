@@ -43,6 +43,8 @@ public:
     void setIndexedUvs(const std::vector<glm::vec2> &);
     void setIndexedNormals(const std::vector<glm::vec3> &);
 
+//	void CleanBuffer();
+
 
 };
 

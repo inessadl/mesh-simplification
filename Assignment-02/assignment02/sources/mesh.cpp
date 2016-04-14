@@ -54,10 +54,3 @@ GLuint * Mesh::getUvBuffer() const
 
 
 
-
-
-// criar um método para deletar
-// glDeleteBuffers(1, &vertexbuffer);
-// glDeleteBuffers(1, &uvbuffer);
-// glDeleteBuffers(1, &normalbuffer);
-// glDeleteBuffers(1, &elementbuffer);
