@@ -8,13 +8,18 @@
 
 class Model
 {
+  glm::mat4 ModelMatrix;
+  GLuint texture;
+  GLuint textureID;
+  const int meshID;
 
 public:
-	~Model();
-
-	void CleanBuffer();
-
-
+  glm::mat4 getModelMatrix() const;
+  GLuint getTexture() const;
+  GLuint getTextureID() const;
+  void queueTransformation();
+  void applyTransformation();
+  void bindTexture();
 };
 
 

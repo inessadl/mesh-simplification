@@ -40,17 +40,17 @@ Mesh::Mesh(const char * path)
 
 }
 
-GLuint * Mesh::getVertexBuffer() const
-{
-    return &vertexbuffer;
-}
+GLuint * Mesh::getVertexBuffer()  const   { return &vertexbuffer; }
+GLuint * Mesh::getUvBuffer()      const   { return &uvbuffer; }
+GLuint * Mesh::getNormalBuffer()  const   { return &normalbuffer; }
+GLuint * Mesh::getElementBuffer() const   { return &elementbuffer; }
 
-GLuint * Mesh::getUvBuffer() const
-{
-    return &uvbuffer;
-}
+std::vector<glm::vec3> * Mesh::getIndexedVertices()   const   { return &indexed_vertices; }
+std::vector<glm::vec2> * Mesh::getIndexedUvs()        const   { return &indexed_uvs; }
+std::vector<glm::vec3> * Mesh::getIndexedNormals()    const   { return &indexed_normals; }
+std::vector<unsigned short> * Mesh::getIndices()      const   { return &indices; }
 
-
-
-
-
+void Mesh::setIndices(const std::vector<unsigned short> &)    {}
+void Mesh::setIndexedVertices(const std::vector<glm::vec3> &) {}
+void Mesh::setIndexedUvs(const std::vector<glm::vec2> &)      {}
+void Mesh::setIndexedNormals(const std::vector<glm::vec3> &)  {}

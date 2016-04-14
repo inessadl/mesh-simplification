@@ -4,10 +4,13 @@
 
 #include "model.hpp"
 
-void Model::CleanBuffer()
-{
-    glDeleteBuffers(1, &vertexbuffer);
-    glDeleteBuffers(1, &uvbuffer);
-    glDeleteBuffers(1, &normalbuffer);
-    glDeleteBuffers(1, &elementbuffer);
-}
+Model::Model() {}
+
+
+// void Model::CleanBuffer()
+// {
+//     glDeleteBuffers(1, &vertexbuffer);
+//     glDeleteBuffers(1, &uvbuffer);
+//     glDeleteBuffers(1, &normalbuffer);
+//     glDeleteBuffers(1, &elementbuffer);
+// }

@@ -28,6 +28,7 @@ public:
     Mesh(const char *);
     ~Mesh();
 
+    // Getters
     GLuint * getVertexBuffer() const;
     GLuint * getUvBuffer() const;
     GLuint * getNormalBuffer() const;
@@ -38,11 +39,14 @@ public:
     std::vector<glm::vec3> * getIndexedNormals() const;
     std::vector<unsigned short> * getIndices() const;
 
+    // Setters
     void setIndices(const std::vector<unsigned short> &);
     void setIndexedVertices(const std::vector<glm::vec3> &);
     void setIndexedUvs(const std::vector<glm::vec2> &);
     void setIndexedNormals(const std::vector<glm::vec3> &);
 
+    // Bind Buffers
+    void bindBufferChannel(int);
 //	void CleanBuffer();
 
 
