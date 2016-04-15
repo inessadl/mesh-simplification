@@ -9,7 +9,7 @@
 
 class ModelManager
 {
-    std::vector<Mesh> mesh;
+    std::vector<Mesh> meshes;
     std::vector<Model> models;
     glm::mat4 projectionMatrix;
     glm::mat4 viewMatrix;
@@ -36,6 +36,9 @@ public:
     GLuint getProgramID();
     GLuint getLightID();
 
+    std::vector<Mesh> * getMeshes();
+    std::vector<Model> * getModels();
+
     // Setters
     void setProjectionMatrix(glm::mat4);
     void setViewMatrix(glm::mat4);
@@ -45,12 +48,14 @@ public:
 
     void setLightPosition(glm::vec3);
     void activateTexture(Model &);
-    void createModel(Mesh &);
+    void createModel(Mesh &, char *, char *);
     void loadMesh(char*);
     void initializeMesh(Mesh&);
     void unloadMesh(Mesh&);
     void generateMVP(Model&);
     void assignMatrix(Model&);
+    void sendTransformation(Model&);
+    void draw(Mesh&);
 
 };
 

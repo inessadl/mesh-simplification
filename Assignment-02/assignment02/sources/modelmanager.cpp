@@ -8,11 +8,12 @@
 
 void ModelManager::ModelManager (char* vertexShaders, char* fragmentShaders, char* lightPosition)
 {
-    LightID = glGetUniformLocation(programID, lightPosition);
-    programID = LoadShaders(vertexShaders, fragmentShaders);
+
     glGenerateVertextArrays(1, &vertexArrayID);
     glBindVertexArray(vertexArrayID);
 
+    programID = LoadShaders(vertexShaders, fragmentShaders);
+    lightID = glGetUniformLocation(programID, lightPosition);
     matrixID = glGetUniformLocation(programID, "MVP");
     viewMatrixID = glGetUniformLocation(programID, "V");
 }
@@ -24,7 +25,7 @@ GLuint ModelManager::getVertexArrayID()
 
 GLuint ModelManager::getProgramID()
 {
-    return vertexArrayID;
+    return programID;
 }
 
 GLuint ModelManager::generateMVP(Model &model)
@@ -45,6 +46,11 @@ glm::mat4 ModelManager::getViewMatrix()
 }
 
 GLuint ModelManager::getMatrixID()
+{
+    return ModelManager::matrixID;
+}
+
+glm::mat4 ModelManager::getViewMatrixID()
 {
     return ModelManager::viewMatrixID;
 }
@@ -83,8 +89,72 @@ void ModelManager::activateTexture(Model &model)
     glUniform1i(model.getTextureID(), 0); // Model
 }
 
+void modelManager::sendTransformation(Model &model)
+{
+    glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
+    glUniformMatrix4fv(model.getModelMatrixID(), 1, GL_FALSE, &model.getModelMatrix()[0][0]);
+    glUniformMatrix4fv(viewMatrixID, 1, GL_FALSE, &viewMatrix[0][0]);
+}
 
 void ModelManager::Draw()
 {
+    glDrawElements(
+            GL_TRIANGLES,        // mode
+            mesh.getIndices()->size(),      // count
+            GL_UNSIGNED_SHORT,   // type
+            (void*)0             // element array buffer offset
+    );
+}
+
+void modelManager::createModel(Mesh & mesh, char* texturePath, char * textureSampler)
+{
+    models.push_back(Model(texturePath, textureSampler, programID, mesh.getId()));
+}
+
+GLuint modelManager::getLightID()
+{
+    return lightID;
+}
+
+void modelManager::setLightID(GLuint newID)
+{
+    modelManager::lightID = newID;
+}
+
+void modelManager::setProgramID(GLuint newID)
+{
+    modelManager::programID = newID;
+}
+
+void modelManager::setMatrixID(GLuint newID)
+{
+    modelManager::matrixID = newID;
+}
+
+void modelManager::setViewMatrixID(GLuint newID)
+{
+    modelManager::viewMatrixID = newID;
+}
+
+void modelManager::unloadMesh(Mesh &mesh)
+{
+    mesh.unloadMesh();
+}
+
+void modelManager::assignMatrix(Model &)
+{
 
 }
+
+std::vector<Mesh> *modelManager::getMeshes()
+{
+    return &meshes;
+}
+
+std::vector<Model> *modelManager::getModels()
+{
+    return &models;
+}
+
+
+
