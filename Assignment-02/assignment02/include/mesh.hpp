@@ -7,6 +7,7 @@
 
 #include <glm/glm.hpp>
 #include <vector>
+#include <GL/glew.h>
 
 
 class Mesh
@@ -18,10 +19,10 @@ private:
     std::vector<glm::vec2> indexed_uvs;
     std::vector<glm::vec3> indexed_normals;
 
-    static int id;
+    int id;
 
-    GLuint Texture;
-    GLuint TextureID;
+//    GLuint Texture;
+//    GLuint TextureID;
 
     GLuint vertexbuffer;
     GLuint uvbuffer;
@@ -29,27 +30,27 @@ private:
     GLuint elementbuffer;
 
 public:
-    Mesh(const char *);
+    Mesh(char *, int);
     ~Mesh();
 
     // Getters
-    GLuint * getVertexBuffer() const;
-    GLuint * getUvBuffer() const;
-    GLuint * getNormalBuffer() const;
-    GLuint * getElementBuffer() const;
-    GLuint * getID() const;
-    int getID() const;
+    GLuint * getVertexBuffer();
+    GLuint * getUvBuffer();
+    GLuint * getNormalBuffer();
+    GLuint * getElementBuffer();
+//    GLuint * getID();
+    int getID();
 
-    std::vector<glm::vec3> * getIndexedVertices() const;
-    std::vector<glm::vec2> * getIndexedUvs() const;
-    std::vector<glm::vec3> * getIndexedNormals() const;
-    std::vector<unsigned short> * getIndices() const;
+    std::vector<glm::vec3> * getIndexedVertices() ;
+    std::vector<glm::vec2> * getIndexedUvs() ;
+    std::vector<glm::vec3> * getIndexedNormals() ;
+    std::vector<unsigned short> * getIndices() ;
 
     // Setters
-    void setIndices(const std::vector<unsigned short> &);
-    void setIndexedVertices(const std::vector<glm::vec3> &);
-    void setIndexedUvs(const std::vector<glm::vec2> &);
-    void setIndexedNormals(const std::vector<glm::vec3> &);
+    void setIndices( std::vector<unsigned short> &);
+    void setIndexedVertices( std::vector<glm::vec3> &);
+    void setIndexedUvs( std::vector<glm::vec2> &);
+    void setIndexedNormals( std::vector<glm::vec3> &);
 
     // Bind Buffers
     void unloadMesh();

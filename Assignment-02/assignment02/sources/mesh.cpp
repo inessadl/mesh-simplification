@@ -4,13 +4,11 @@
 
 #include <objloader.hpp>
 #include <vboindexer.hpp>
-#include <vboindexer.hpp>
-// Include GLEW
 #include <GL/glew.h>
 #include "mesh.hpp"
 
 
-Mesh::Mesh(const char * path, int id)
+Mesh::Mesh(char * path, int id)
 {
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> uvs;
@@ -116,20 +114,20 @@ void Mesh::unloadMesh ()
     glDisableVertexAttribArray(2);
 }
 
-GLuint * Mesh::getVertexBuffer()    const   { return &vertexbuffer; }
-GLuint * Mesh::getUvBuffer()        const   { return &uvbuffer; }
-GLuint * Mesh::getNormalBuffer()    const   { return &normalbuffer; }
-GLuint * Mesh::getElementBuffer()   const   { return &elementbuffer; }
-GLuint * Mesh::getID()              const   { return; }
+GLuint * Mesh::getVertexBuffer()       { return &vertexbuffer; }
+GLuint * Mesh::getUvBuffer()           { return &uvbuffer; }
+GLuint * Mesh::getNormalBuffer()       { return &normalbuffer; }
+GLuint * Mesh::getElementBuffer()      { return &elementbuffer; }
+GLuint * Mesh::getID()                 { return Mesh::id; }
 
-std::vector<glm::vec3> * Mesh::getIndexedVertices()   const   { return &indexed_vertices; }
-std::vector<glm::vec2> * Mesh::getIndexedUvs()        const   { return &indexed_uvs; }
-std::vector<glm::vec3> * Mesh::getIndexedNormals()    const   { return &indexed_normals; }
-std::vector<unsigned short> * Mesh::getIndices()      const   { return &indices; }
+std::vector<glm::vec3> * Mesh::getIndexedVertices()      { return &indexed_vertices; }
+std::vector<glm::vec2> * Mesh::getIndexedUvs()           { return &indexed_uvs; }
+std::vector<glm::vec3> * Mesh::getIndexedNormals()       { return &indexed_normals; }
+std::vector<unsigned short> * Mesh::getIndices()         { return &indices; }
 
-void Mesh::setIndices(const std::vector<unsigned short> &indices)       {  Mesh::indices = indices; }
-void Mesh::setIndexedVertices(const std::vector<glm::vec3> &vertices)   { Mesh::indexed_vertices = vertices; }
-void Mesh::setIndexedUvs(const std::vector<glm::vec2> &uvs)             { Mesh::indexed_uvs = uvs; }
-void Mesh::setIndexedNormals(const std::vector<glm::vec3> &normals)     { Mesh::indexed_normals = normals; }
+void Mesh::setIndices( std::vector<unsigned short> &indices)       {  Mesh::indices = indices; }
+void Mesh::setIndexedVertices( std::vector<glm::vec3> &vertices)   { Mesh::indexed_vertices = vertices; }
+void Mesh::setIndexedUvs( std::vector<glm::vec2> &uvs)             { Mesh::indexed_uvs = uvs; }
+void Mesh::setIndexedNormals( std::vector<glm::vec3> &normals)     { Mesh::indexed_normals = normals; }
 
-int Mesh::getId() const { return Mesh::id; }
+int Mesh::getId()  { return Mesh::id; }
