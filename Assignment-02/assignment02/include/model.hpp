@@ -15,7 +15,8 @@ class Model
     GLuint modelMatrixID;
     GLuint texture;
     GLuint textureID;
-    const int meshID;
+    int meshID;
+    std::vector<glm::mat4> animatedMatrix;
 
 public:
     Model(char*, char*, GLuint, int);
@@ -35,7 +36,9 @@ public:
 
     void queueTransformation();
     void applyTransformation();
+    void interpolateMatrix();
     void bindTexture();
+
 };
 
 
