@@ -58,7 +58,7 @@ Mesh::~Mesh ()
 
 void Mesh::loadMesh()
 {
-    if (vertexBuffer != NULL)
+    if (&vertexbuffer != NULL)
     {
         // 1rst attribute buffer : vertices
         glEnableVertexAttribArray(0);
@@ -74,7 +74,7 @@ void Mesh::loadMesh()
     }
 
 
-    if (uvbuffer != NULL)
+    if (&uvbuffer != NULL)
     {
         // 2nd attribute buffer : UVs
         glEnableVertexAttribArray(1);
@@ -90,7 +90,7 @@ void Mesh::loadMesh()
     }
 
 
-    if (normalbuffer != NULL)
+    if (&normalbuffer != NULL)
     {
         // 3rd attribute buffer : normals
         glEnableVertexAttribArray(2);
@@ -118,7 +118,7 @@ GLuint * Mesh::getVertexBuffer()       { return &vertexbuffer; }
 GLuint * Mesh::getUvBuffer()           { return &uvbuffer; }
 GLuint * Mesh::getNormalBuffer()       { return &normalbuffer; }
 GLuint * Mesh::getElementBuffer()      { return &elementbuffer; }
-GLuint * Mesh::getID()                 { return Mesh::id; }
+int Mesh::getID()                 { return Mesh::id; }
 
 std::vector<glm::vec3> * Mesh::getIndexedVertices()      { return &indexed_vertices; }
 std::vector<glm::vec2> * Mesh::getIndexedUvs()           { return &indexed_uvs; }
@@ -129,5 +129,3 @@ void Mesh::setIndices( std::vector<unsigned short> &indices)       {  Mesh::indi
 void Mesh::setIndexedVertices( std::vector<glm::vec3> &vertices)   { Mesh::indexed_vertices = vertices; }
 void Mesh::setIndexedUvs( std::vector<glm::vec2> &uvs)             { Mesh::indexed_uvs = uvs; }
 void Mesh::setIndexedNormals( std::vector<glm::vec3> &normals)     { Mesh::indexed_normals = normals; }
-
-int Mesh::getId()  { return Mesh::id; }

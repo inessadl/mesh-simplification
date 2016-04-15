@@ -28,19 +28,19 @@ GLuint ModelManager::getProgramID()
     return programID;
 }
 
-GLuint ModelManager::generateMVP(Model &model)
+void ModelManager::generateMVP(Model &model)
 {
     ModelManager::projectionMatrix = getProjectionMatrix();
     ModelManager::viewMatrix = getViewMatrix();
     ModelManager::MVP = projectionMatrix * viewMatrix * model.getModelMatrix();
 }
 
-glm::mat4 ModelManager::getProjectionMatrix()
+glm::mat4 ModelManager::getprojectionMatrix()
 {
     return ModelManager::projectionMatrix;
 }
 
-glm::mat4 ModelManager::getViewMatrix()
+glm::mat4 ModelManager::getviewMatrix()
 {
     return ModelManager::viewMatrix;
 }
@@ -50,7 +50,7 @@ GLuint ModelManager::getMatrixID()
     return ModelManager::matrixID;
 }
 
-glm::mat4 ModelManager::getViewMatrixID()
+GLuint ModelManager::getViewMatrixID()
 {
     return ModelManager::viewMatrixID;
 }
@@ -70,7 +70,7 @@ void ModelManager::loadMesh(char* path)
     ModelManager::meshes.push_back(Mesh(path, meshes.size()));
 }
 
-void ModelManager::InitializeMesh(Mesh &mesh)
+void ModelManager::initializeMesh(Mesh &mesh)
 {
     mesh.loadMesh();
 }
@@ -89,7 +89,7 @@ void ModelManager::activateTexture(Model &model)
     glUniform1i(model.getTextureID(), 0); // Model
 }
 
-void modelManager::sendTransformation(Model &model)
+void ModelManager::sendTransformation(Model &model)
 {
     glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
     glUniformMatrix4fv(model.getModelMatrixID(), 1, GL_FALSE, &model.getModelMatrix()[0][0]);
@@ -106,9 +106,9 @@ void ModelManager::Draw()
     );
 }
 
-void modelManager::createModel(Mesh & mesh, char* texturePath, char * textureSampler)
+void ModelManager::createModel(Mesh & mesh, char* texturePath, char * textureSampler)
 {
-    models.push_back(Model(texturePath, textureSampler, programID, mesh.getId()));
+    models.push_back(Model(texturePath, textureSampler, this->programID, mesh.getId()));
 }
 
 GLuint modelManager::getLightID()

@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
-project (CG_UFPel)
+project (assignment02)
 
 find_package(OpenGL REQUIRED)
 
@@ -14,7 +14,7 @@ add_definitions(
 	-D_CRT_SECURE_NO_WARNINGS
 )
 
-add_executable(CG_UFPel
+add_executable(assignment02
     sources/controls.cpp
     sources/main.cpp
     sources/objloader.cpp    
@@ -25,6 +25,10 @@ add_executable(CG_UFPel
     sources/texture.cpp
     sources/vboindexer.cpp
     sources/glerror.cpp
+	sources/meshsimplification.cpp
+	sources/model.cpp
+	sources/mesh.cpp
+	sources/modelmanager.cpp
 
     include/controls.hpp    
     include/objloader.hpp
@@ -35,7 +39,10 @@ add_executable(CG_UFPel
     include/texture.hpp
     include/vboindexer.hpp
     include/glerror.hpp
-		sources/meshsimplification.cpp include/meshsimplification.hpp)
+ 	include/meshsimplification.hpp
+	include/modelmanager.hpp
+	include/mesh.hpp
+	include/model.hpp)
 
 include_directories(
     external/AntTweakBar-1.16/include/
@@ -53,7 +60,7 @@ set(ALL_LIBS
     ANTTWEAKBAR_116_OGLCORE_GLFW
 )
 
-target_link_libraries(CG_UFPel
+target_link_libraries(assignment02
     ${ALL_LIBS}
 	assimp
 )

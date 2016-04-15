@@ -2,10 +2,13 @@
 // Created by inessa on 13/04/16.
 //
 
-#ifndef CG_UFPEL_MODELMANAGER_H
-#define CG_UFPEL_MODELMANAGER_H
+#ifndef MODELMANAGER_H
+#define MODELMANAGER_H
 
-
+#include <glm/glm.hpp>
+#include <vector>
+#include "model.hpp"
+#include "mesh.hpp"
 
 class ModelManager
 {
@@ -22,15 +25,15 @@ class ModelManager
     GLuint lightID;
 
 public:
-    Model(char*, char*, char*);
+    ModelManager(char*, char*, char*);
     ~ModelManager();
 
     // Getters
     GLuint getMatrixID();
     GLuint getViewMatrixID();
 
-    glm::mat4 getProjectionMatrix();
-    glm::mat4 getViewMatrix();
+    glm::mat4 getprojectionMatrix();
+    glm::mat4 getviewMatrix();
 
     GLuint getVertexArrayID();
     GLuint getProgramID();
@@ -60,4 +63,4 @@ public:
 };
 
 
-#endif //CG_UFPEL_MODELMANAGER_H
+#endif //MODELMANAGER_H

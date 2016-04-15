@@ -6,7 +6,8 @@
 // Include Mesh Simplification
 #include "meshsimplification.hpp"
 #include "mesh.hpp"
-#include "model_manager.hpp"
+#include "modelmanager.hpp"
+#include "model.hpp"
 
 // Include GLEW
 #include <GL/glew.h>
@@ -31,9 +32,11 @@ using namespace glm;
 #include <objloader.hpp>
 #include <vboindexer.hpp>
 #include <glerror.hpp>
-#include <model_manager.hpp>
 
-void WindowSizeCallBack(GLFWwindow *pWindow, int nWidth, int nHeight) {
+
+
+void WindowSizeCallBack(GLFWwindow *pWindow, int nWidth, int nHeight)
+{
 
 	g_nWidth = nWidth;
 	g_nHeight = nHeight;
@@ -113,7 +116,7 @@ int main(void)
 	glEnable(GL_CULL_FACE);
 
 
-	modelManager manager("shaders/StandardShading.vertexshader",
+	ModelManager manager("shaders/StandardShading.vertexshader",
 	                     "shaders/StandardShading.fragmentshader",
 	                     "LightPosition_worldspace");
 
@@ -122,7 +125,7 @@ int main(void)
 
 
 	// Read our .obj file
-	manager.loadMesh("mesh/cube.obj");
+	manager.loadMesh("mesh/suzanne.obj");
 	manager.createModel(manager.getMeshes()->front(), "mesh/uvmap.DDS", "myTextureSampler");
 
 // Load it into a VBO
@@ -136,7 +139,7 @@ int main(void)
 
 	glDisable(GL_CULL_FACE);
 
-	do{
+	do {
 		check_gl_error();
 
 
@@ -162,17 +165,23 @@ int main(void)
 		// Use our shader
 		glUseProgram(manager.getProgramID());
 
-		manager.activateTexture(manager.getModels()->front());
+//		manager.activateTexture(manager.getModels()->front());
 
-		manager.initializeMesh(manager.getMeshes()->at(manager.getModels()->front().getMeshID()));
+//		manager.initializeMesh(manager.getMeshes()->at(manager.getModels()->front().getMeshID()));
 
 		// Compute the MVP matrix from keyboard and mouse input
 
 		computeMatricesFromInputs(nUseMouse, g_nWidth, g_nHeight);
 
-
+		manager.generateMVP(manager.getModels()->front());
+		manager.sendTransformation(manager.getModels()->front());
 
 		manager.setLightPosition(glm::vec3(4, 4, 4));
+
+		manager.activateTexture(manager.getModels()->front());
+		manager.initializeMesh(manager.getMeshes()->at(manager.getModels()->front().getMeshID()));
+
+		manager.draw(manager.getMeshes()->front());
 
 		// Index buffer
 

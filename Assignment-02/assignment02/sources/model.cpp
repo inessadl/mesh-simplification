@@ -2,6 +2,7 @@
 // Created by inessa on 12/04/16.
 //
 
+#include <texture.hpp>
 #include "model.hpp"
 
 Model::Model(char * texturePath, char * textureSampler, GLuint programID, int meshID)
@@ -21,27 +22,27 @@ Model::~Model()
     glDeleteTextures(1, &texture);
 }
 
-glm::mat4 Model::getModelMatrix() const
+glm::mat4 Model::getModelMatrix() 
 {
-    return Model::modelMatrix();
+    return Model::modelMatrix;
 }
 
-GLuint Model::getModelMatrixID() const
+GLuint Model::getModelMatrixID() 
 {
     return Model::modelMatrixID;
 }
 
-GLuint Model::getTexture() const
+GLuint Model::getTexture() 
 {
     return texture;
 }
 
-GLuint Model::getTextureID() const
+GLuint Model::getTextureID() 
 {
     return textureID;
 }
 
-GLuint Model::getMeshID() const
+GLuint Model::getMeshID() 
 {
     return meshID;
 }

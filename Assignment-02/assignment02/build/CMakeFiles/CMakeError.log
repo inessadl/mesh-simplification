@@ -1,0 +1,79 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/inessa/cg/Assignment-02/assignment02/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec4060659385/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec4060659385.dir/build.make CMakeFiles/cmTryCompileExec4060659385.dir/build
+make[1]: Entering directory '/home/inessa/cg/Assignment-02/assignment02/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/inessa/cg/Assignment-02/assignment02/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec4060659385.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec4060659385.dir/CheckSymbolExists.c.o   -c /home/inessa/cg/Assignment-02/assignment02/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec4060659385
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4060659385.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec4060659385.dir/CheckSymbolExists.c.o  -o cmTryCompileExec4060659385 -rdynamic 
+CMakeFiles/cmTryCompileExec4060659385.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTryCompileExec4060659385.dir/build.make:88: recipe for target 'cmTryCompileExec4060659385' failed
+make[1]: *** [cmTryCompileExec4060659385] Error 1
+make[1]: Leaving directory '/home/inessa/cg/Assignment-02/assignment02/build/CMakeFiles/CMakeTmp'
+Makefile:117: recipe for target 'cmTryCompileExec4060659385/fast' failed
+make: *** [cmTryCompileExec4060659385/fast] Error 2
+
+File /home/inessa/cg/Assignment-02/assignment02/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/inessa/cg/Assignment-02/assignment02/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec3809054978/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3809054978.dir/build.make CMakeFiles/cmTryCompileExec3809054978.dir/build
+make[1]: Entering directory '/home/inessa/cg/Assignment-02/assignment02/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/inessa/cg/Assignment-02/assignment02/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3809054978.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec3809054978.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.2/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec3809054978
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3809054978.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec3809054978.dir/CheckFunctionExists.c.o  -o cmTryCompileExec3809054978 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTryCompileExec3809054978.dir/build.make:88: recipe for target 'cmTryCompileExec3809054978' failed
+make[1]: *** [cmTryCompileExec3809054978] Error 1
+make[1]: Leaving directory '/home/inessa/cg/Assignment-02/assignment02/build/CMakeFiles/CMakeTmp'
+Makefile:117: recipe for target 'cmTryCompileExec3809054978/fast' failed
+make: *** [cmTryCompileExec3809054978/fast] Error 2
+
+
+Determining if the function glXGetProcAddressEXT exists failed with the following output:
+Change Dir: /home/inessa/cg/Assignment-02/assignment02/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec275076870/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec275076870.dir/build.make CMakeFiles/cmTryCompileExec275076870.dir/build
+make[1]: Entering directory '/home/inessa/cg/Assignment-02/assignment02/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/inessa/cg/Assignment-02/assignment02/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec275076870.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=glXGetProcAddressEXT   -o CMakeFiles/cmTryCompileExec275076870.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.2/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec275076870
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec275076870.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=glXGetProcAddressEXT    CMakeFiles/cmTryCompileExec275076870.dir/CheckFunctionExists.c.o  -o cmTryCompileExec275076870 -rdynamic -lGL 
+CMakeFiles/cmTryCompileExec275076870.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x15): undefined reference to `glXGetProcAddressEXT'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTryCompileExec275076870.dir/build.make:89: recipe for target 'cmTryCompileExec275076870' failed
+make[1]: Leaving directory '/home/inessa/cg/Assignment-02/assignment02/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec275076870] Error 1
+Makefile:117: recipe for target 'cmTryCompileExec275076870/fast' failed
+make: *** [cmTryCompileExec275076870/fast] Error 2
+
+

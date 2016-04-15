@@ -2,8 +2,8 @@
 // Created by inessa on 12/04/16.
 //
 
-#ifndef CG_UFPEL_MODEL_H
-#define CG_UFPEL_MODEL_H
+#ifndef MODEL_H
+#define MODEL_H
 
 #include<vector>
 #include <GL/glew.h>
@@ -23,11 +23,11 @@ public:
     ~Model();
 
     // Getters
-    glm::mat4 getModelMatrix() const;
-    GLuint getModelMatrixID() const;
-    GLuint getTexture() const;
-    GLuint getTextureID() const;
-    GLuint getMeshID() const;
+    glm::mat4 getModelMatrix() ;
+    GLuint getModelMatrixID() ;
+    GLuint getTexture() ;
+    GLuint getTextureID() ;
+    GLuint getMeshID() ;
 
     // Setters
     void setModelMatrixID(GLuint);
