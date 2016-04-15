@@ -23,7 +23,7 @@ Model::~Model()
 
 glm::mat4 Model::getModelMatrix() const
 {
-    return Model::getModelMatrix();
+    return Model::modelMatrix();
 }
 
 GLuint Model::getModelMatrixID() const

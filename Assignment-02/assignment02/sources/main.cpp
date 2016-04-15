@@ -3,6 +3,11 @@
 #include <stdlib.h>
 #include <vector>
 
+// Include Mesh Simplification
+#include "meshsimplification.hpp"
+#include "mesh.hpp"
+#include "model_manager.hpp"
+
 // Include GLEW
 #include <GL/glew.h>
 
@@ -26,10 +31,9 @@ using namespace glm;
 #include <objloader.hpp>
 #include <vboindexer.hpp>
 #include <glerror.hpp>
-#include <meshsimplification.hpp>
+#include <model_manager.hpp>
 
-void WindowSizeCallBack(GLFWwindow *pWindow, int nWidth, int nHeight)
-{
+void WindowSizeCallBack(GLFWwindow *pWindow, int nWidth, int nHeight) {
 
 	g_nWidth = nWidth;
 	g_nHeight = nHeight;
@@ -108,45 +112,39 @@ int main(void)
 	// Cull triangles which normal is not towards the camera
 	glEnable(GL_CULL_FACE);
 
+
+	modelManager manager("shaders/StandardShading.vertexshader",
+	                     "shaders/StandardShading.fragmentshader",
+	                     "LightPosition_worldspace");
+
+	//MeshSimplification MS;
 	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders("shaders/StandardShading.vertexshader", "shaders/StandardShading.fragmentshader");
-
-	// Get a handle for our "MVP" uniform
-	GLuint MatrixID      = glGetUniformLocation(programID, "MVP");
-	GLuint ViewMatrixID  = glGetUniformLocation(programID, "V");
-	// GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
 
 
-	// Get a handle for our "LightPosition" uniform
-	glUseProgram(programID);
-	GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
+	// Read our .obj file
+	manager.loadMesh("mesh/cube.obj");
+	manager.createModel(manager.getMeshes()->front(), "mesh/uvmap.DDS", "myTextureSampler");
+
+// Load it into a VBO
+
+	glUseProgram(manager.getProgramID());
+
 
 	// For speed computation
 	double lastTime = glfwGetTime();
 	int nbFrames    = 0;
 
-	do {
-        check_gl_error();
+	glDisable(GL_CULL_FACE);
 
-		// uses the control key to change the view of the object
+	do{
+		check_gl_error();
+
+
+		//use the control key to free the mouse
 		if (glfwGetKey(g_pWindow, GLFW_KEY_LEFT_CONTROL) != GLFW_PRESS)
 			nUseMouse = 0;
 		else
 			nUseMouse = 1;
-
-		// Executes simplification by pressing the "I" key
-		if (glfwGetKey(g_pWindow, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
-		{
-			if(glfwGetKey(g_pWindow, GLFW_KEY_I) == GLFW_PRESS)
-			{
-				if(glfwGetKey(g_pWindow, GLFW_KEY_I) == GLFW_RELEASE)
-				{
-					// Calls removeVertex from MeshSimplification
-					ms.removeVertex(indices, indexed_vertices);
-				}
-			}
-		}
-
 
 		// Measure speed
 		double currentTime = glfwGetTime();
@@ -162,44 +160,24 @@ int main(void)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Use our shader
-		glUseProgram(programID);
+		glUseProgram(manager.getProgramID());
+
+		manager.activateTexture(manager.getModels()->front());
+
+		manager.initializeMesh(manager.getMeshes()->at(manager.getModels()->front().getMeshID()));
 
 		// Compute the MVP matrix from keyboard and mouse input
+
 		computeMatricesFromInputs(nUseMouse, g_nWidth, g_nHeight);
-		glm::mat4 ProjectionMatrix = getProjectionMatrix();
-		glm::mat4 ViewMatrix       = getViewMatrix();
-		// glm::mat4 ModelMatrix      = glm::mat4(1.0);
-		glm::mat4 MVP              = ProjectionMatrix * ViewMatrix * ModelMatrix;
-
-		// Send our transformation to the currently bound shader,
-		// in the "MVP" uniform
-		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-		glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
-		glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
-
-		glm::vec3 lightPos = glm::vec3(4, 4, 4);
-		glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
-
-		// Bind our texture in Texture Unit 0
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, Texture);
-		// Set our "myTextureSampler" sampler to user Texture Unit 0
-		glUniform1i(TextureID, 0);
 
 
+
+		manager.setLightPosition(glm::vec3(4, 4, 4));
 
 		// Index buffer
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
+
 
 		// Draw the triangles !
-		glDrawElements(
-			GL_TRIANGLES,        // mode
-			indices.size(),      // count
-			GL_UNSIGNED_SHORT,   // type
-			(void*)0             // element array buffer offset
-			);
-
-
 
 		// Draw tweak bars
 		TwDraw();
@@ -210,8 +188,9 @@ int main(void)
 
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(g_pWindow, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-	glfwWindowShouldClose(g_pWindow) == 0);
+	       glfwWindowShouldClose(g_pWindow) == 0);
 
+	// Cleanup VBO and shader
 
 
 	// Terminate AntTweakBar and GLFW
@@ -220,3 +199,4 @@ int main(void)
 
 	return 0;
 }
+
