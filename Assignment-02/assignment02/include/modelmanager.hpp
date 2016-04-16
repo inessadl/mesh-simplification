@@ -24,6 +24,10 @@ class ModelManager
     GLuint viewMatrixID;
     GLuint lightID;
 
+    void generateMVP(Model&);
+    void sendTransformation(Model&);
+    void initializeMesh(Mesh&);
+
 public:
     ModelManager(char*, char*, char*);
     ~ModelManager();
@@ -46,19 +50,20 @@ public:
     void setProjectionMatrix(glm::mat4);
     void setViewMatrix(glm::mat4);
     void setLightID(GLuint);
+    void setProgramID(GLuint);
     void setMatrixID();
     void setViewMatrixID();
 
     void setLightPosition(glm::vec3);
-    void activateTexture(Model &);
+    // void activateTexture(Model &);
     void createModel(Mesh &, char *, char *);
     void loadMesh(char*);
-    void initializeMesh(Mesh&);
-    void unloadMesh(Mesh&);
-    void generateMVP(Model&);
-    void assignMatrix(Model&);
-    void sendTransformation(Model&);
-    void draw(Mesh&);
+    // void initializeMesh(Mesh&);
+    // void unloadMesh(Mesh&);
+    // void generateMVP(Model&);
+    // void assignMatrix(Model&);
+    // void sendTransformation(Model&);
+    void draw();
 
 };
 

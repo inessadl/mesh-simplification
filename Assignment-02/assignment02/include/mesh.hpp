@@ -39,7 +39,7 @@ public:
     GLuint * getNormalBuffer();
     GLuint * getElementBuffer();
 //    GLuint * getID();
-    int getID();
+    // int getID();
 
     std::vector<glm::vec3> * getIndexedVertices() ;
     std::vector<glm::vec2> * getIndexedUvs() ;

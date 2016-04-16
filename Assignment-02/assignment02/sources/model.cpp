@@ -1,17 +1,18 @@
 //
 // Created by inessa on 12/04/16.
 //
-
+#include <GL/glew.h>
 #include <texture.hpp>
-#include "model.hpp"
+#include <model.hpp>
+#include <mesh.hpp>
 
-Model::Model(char * texturePath, char * textureSampler, GLuint programID, int meshID)
+Model::Model(char * texturePath, char * textureSampler, GLuint programID, Mesh *mesh)
 {
     texture = loadDDS(texturePath);
     modelMatrixID = glGetUniformLocation(programID, "M");
     textureID = glGetUniformLocation(programID, textureSampler);
 
-    Model::meshID = meshID;
+    Model::mesh = mesh;
 
     // matrix 4 x 4
     modelMatrix = glm::mat4(1.0);
@@ -22,42 +23,76 @@ Model::~Model()
     glDeleteTextures(1, &texture);
 }
 
-glm::mat4 Model::getModelMatrix() 
+glm::mat4 Model::getModelMatrix()
 {
     return Model::modelMatrix;
 }
 
-GLuint Model::getModelMatrixID() 
+GLuint Model::getModelMatrixID()
 {
     return Model::modelMatrixID;
 }
 
-GLuint Model::getTexture() 
+GLuint Model::getTexture()
 {
     return texture;
 }
 
-GLuint Model::getTextureID() 
+GLuint Model::getTextureID()
 {
     return textureID;
 }
 
-GLuint Model::getMeshID() 
+// GLuint Model::getMeshID()
+// {
+//     return meshID;
+// }
+void Model::setModelMatrix(glm::mat4 matrix)
 {
-    return meshID;
+  Model::modelMatrix = matrix;
 }
 
-void Model::setModelMatrixID(GLuint newModelMatrixID)
+void Model::setModelMatrixID(GLuint modelMatrixID)
 {
-    modelMatrixID = newModelMatrixID;
-}
-
-void Model::setTextureID(GLuint newTextureID)
-{
-    textureID = newTextureID;
+    modelMatrixID = modelMatrixID;
 }
 
 
+void Model::activateTexture()
+{
+  // Bind our texture in Texture Unit 0
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, Model::texture);
+  // Set our texture to user Texture Unit 0
+  glUniform1i(Model::textureID, 0);
+}
+
+void Model::initializeMesh()
+{
+  mesh->loadMesh();
+}
+
+void Model::draw()
+{
+  Model::activateTexture();
+  Model::initializeMesh();
+  glDrawElements(
+    GL_TRIANGLES,               // mode
+    mesh->getIndices()->size(), // count
+    GL_UNSIGNED_SHORT,          // type
+    (void*)0                    // element array buffer offset
+  );
+}
+
+void Model::setTextureID(GLuint textureID)
+{
+    textureID = textureID;
+}
+
+Model::~Model()
+{
+  
+}
 
 // void Model::CleanBuffer()
 // {

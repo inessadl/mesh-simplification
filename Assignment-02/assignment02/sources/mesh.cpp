@@ -8,13 +8,13 @@
 #include "mesh.hpp"
 
 
-Mesh::Mesh(char * path, int id)
+Mesh::Mesh(char * path)
 {
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> uvs;
     std::vector<glm::vec3> normals;
 
-    Mesh::id = id;
+    // Mesh::id = id;
 
     // Load it into a VBO
     loadOBJ(path, vertices, uvs, normals);
@@ -46,15 +46,32 @@ Mesh::Mesh(char * path, int id)
 Mesh::~Mesh ()
 {
     // 	Cleanup VBO and shader
-    glDeleteBuffers(1, &vertexbuffer);
-    glDeleteBuffers(1, &uvbuffer);
-    glDeleteBuffers(1, &normalbuffer);
-    glDeleteBuffers(1, &elementbuffer);
+    // glDeleteBuffers(1, &vertexbuffer);
+    // glDeleteBuffers(1, &uvbuffer);
+    // glDeleteBuffers(1, &normalbuffer);
+    // glDeleteBuffers(1, &elementbuffer);
 
 //    glDeleteProgram(programID);
 //    glDeleteTextures(1, &Texture);
 //    glDeleteVertexArrays(1, &VertexArrayID);
 }
+
+GLuint * Mesh::getVertexBuffer()       { return &vertexbuffer; }
+GLuint * Mesh::getUvBuffer()           { return &uvbuffer; }
+GLuint * Mesh::getNormalBuffer()       { return &normalbuffer; }
+GLuint * Mesh::getElementBuffer()      { return &elementbuffer; }
+int Mesh::getID()                 { return Mesh::id; }
+
+std::vector<glm::vec3> * Mesh::getIndexedVertices()      { return &indexed_vertices; }
+std::vector<glm::vec2> * Mesh::getIndexedUvs()           { return &indexed_uvs; }
+std::vector<glm::vec3> * Mesh::getIndexedNormals()       { return &indexed_normals; }
+std::vector<unsigned short> * Mesh::getIndices()         { return &indices; }
+
+void Mesh::setIndices( std::vector<unsigned short> &indices)       { Mesh::indices = indices; }
+void Mesh::setIndexedVertices( std::vector<glm::vec3> &vertices)   { Mesh::indexed_vertices = vertices; }
+void Mesh::setIndexedUvs( std::vector<glm::vec2> &uvs)             { Mesh::indexed_uvs = uvs; }
+void Mesh::setIndexedNormals( std::vector<glm::vec3> &normals)     { Mesh::indexed_normals = normals; }
+
 
 void Mesh::loadMesh()
 {
@@ -107,25 +124,10 @@ void Mesh::loadMesh()
 
 }
 
+
 void Mesh::unloadMesh ()
 {
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
 }
-
-GLuint * Mesh::getVertexBuffer()       { return &vertexbuffer; }
-GLuint * Mesh::getUvBuffer()           { return &uvbuffer; }
-GLuint * Mesh::getNormalBuffer()       { return &normalbuffer; }
-GLuint * Mesh::getElementBuffer()      { return &elementbuffer; }
-int Mesh::getID()                 { return Mesh::id; }
-
-std::vector<glm::vec3> * Mesh::getIndexedVertices()      { return &indexed_vertices; }
-std::vector<glm::vec2> * Mesh::getIndexedUvs()           { return &indexed_uvs; }
-std::vector<glm::vec3> * Mesh::getIndexedNormals()       { return &indexed_normals; }
-std::vector<unsigned short> * Mesh::getIndices()         { return &indices; }
-
-void Mesh::setIndices( std::vector<unsigned short> &indices)       {  Mesh::indices = indices; }
-void Mesh::setIndexedVertices( std::vector<glm::vec3> &vertices)   { Mesh::indexed_vertices = vertices; }
-void Mesh::setIndexedUvs( std::vector<glm::vec2> &uvs)             { Mesh::indexed_uvs = uvs; }
-void Mesh::setIndexedNormals( std::vector<glm::vec3> &normals)     { Mesh::indexed_normals = normals; }

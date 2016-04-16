@@ -2,9 +2,11 @@
 // Created by inessa on 13/04/16.
 //
 
-#include "modelmanager.hpp"
+#include <modelmanager.hpp>
 #include <shader.hpp>
+#include <iostream>
 #include <controls.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 void ModelManager::ModelManager (char* vertexShaders, char* fragmentShaders, char* lightPosition)
 {
@@ -67,27 +69,27 @@ void ModelManager::setViewMatrix(glm::mat4 viewMatrix)
 
 void ModelManager::loadMesh(char* path)
 {
-    ModelManager::meshes.push_back(Mesh(path, meshes.size()));
+    ModelManager::meshes.push_back(Mesh(path));
 }
 
-void ModelManager::initializeMesh(Mesh &mesh)
-{
-    mesh.loadMesh();
-}
+// void ModelManager::initializeMesh(Mesh &mesh)
+// {
+//     mesh.loadMesh();
+// }
 
 void ModelManager::setLightPosition(glm::vec3 lightPos = glm::vec3(4, 4, 4))
 {
     glUniform3f(lightID, lightPos.x, lightPos.y, lightPos.z);
 }
 
-void ModelManager::activateTexture(Model &model)
-{
-    // Bind our texture in Texture Unit 0
-    glActiveTexture(GL_TEXTURE0);  // Model
-    glBindTexture(GL_TEXTURE_2D, model.getTexture()); // Model
-    // Set our texture sampler to user Texture Unit 0
-    glUniform1i(model.getTextureID(), 0); // Model
-}
+// void ModelManager::activateTexture(Model &model)
+// {
+//     // Bind our texture in Texture Unit 0
+//     glActiveTexture(GL_TEXTURE0);  // Model
+//     glBindTexture(GL_TEXTURE_2D, model.getTexture()); // Model
+//     // Set our texture sampler to user Texture Unit 0
+//     glUniform1i(model.getTextureID(), 0); // Model
+// }
 
 void ModelManager::sendTransformation(Model &model)
 {
@@ -98,63 +100,74 @@ void ModelManager::sendTransformation(Model &model)
 
 void ModelManager::Draw()
 {
-    glDrawElements(
-            GL_TRIANGLES,        // mode
-            mesh.getIndices()->size(),      // count
-            GL_UNSIGNED_SHORT,   // type
-            (void*)0             // element array buffer offset
-    );
+  models[0].setModelMatrix(glm::translate(glm::mat4(1.0), glm::vec3(-1.0f, 0.0f, -3.0f)));
+  models[1].setModelMatrix(glm::translate(glm::mat4(1.0), glm::vec3(1.0f, 0.0f, 3.0f)));
+
+  for (int j = 0; j < models.size(); j++)
+  {
+    generateMVP(models[j]);
+    sendTransformation(models[j]);
+    models[j].draw();
+  }
+    // glDrawElements(
+    //         GL_TRIANGLES,        // mode
+    //         mesh.getIndices()->size(),      // count
+    //         GL_UNSIGNED_SHORT,   // type
+    //         (void*)0             // element array buffer offset
+    // );
+}
+
+ModelManager::~ModelManager()
+{
+
 }
 
 void ModelManager::createModel(Mesh & mesh, char* texturePath, char * textureSampler)
 {
-    models.push_back(Model(texturePath, textureSampler, this->programID, mesh.getId()));
+    models.push_back(Model(texturePath, textureSampler, this->programID, &mesh));
 }
 
-GLuint modelManager::getLightID()
+GLuint ModelManager::getLightID()
 {
     return lightID;
 }
 
-void modelManager::setLightID(GLuint newID)
+void ModelManager::setLightID(GLuint id)
 {
-    modelManager::lightID = newID;
+    modelManager::lightID = id;
 }
 
-void modelManager::setProgramID(GLuint newID)
+void ModelManager::setProgramID(GLuint id)
 {
-    modelManager::programID = newID;
+    modelManager::programID = id;
 }
 
-void modelManager::setMatrixID(GLuint newID)
+void ModelManager::setMatrixID(GLuint id)
 {
-    modelManager::matrixID = newID;
+    modelManager::matrixID = id;
 }
 
-void modelManager::setViewMatrixID(GLuint newID)
+void ModelManager::setViewMatrixID(GLuint id)
 {
-    modelManager::viewMatrixID = newID;
+    modelManager::viewMatrixID = id;
 }
 
-void modelManager::unloadMesh(Mesh &mesh)
+void ModelManager::unloadMesh(Mesh &mesh)
 {
     mesh.unloadMesh();
 }
 
-void modelManager::assignMatrix(Model &)
+void ModelManager::assignMatrix(Model &)
 {
 
 }
 
-std::vector<Mesh> *modelManager::getMeshes()
+std::vector<Mesh> *ModelManager::getMeshes()
 {
     return &meshes;
 }
 
-std::vector<Model> *modelManager::getModels()
+std::vector<Model> *ModelManager::getModels()
 {
     return &models;
 }
-
-
-

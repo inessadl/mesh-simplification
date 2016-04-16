@@ -7,7 +7,7 @@
 #include "meshsimplification.hpp"
 #include "mesh.hpp"
 #include "modelmanager.hpp"
-#include "model.hpp"
+// #include "model.hpp"
 
 // Include GLEW
 #include <GL/glew.h>
@@ -61,6 +61,7 @@ int main(void)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Open a window and create its OpenGL context
+
 	g_pWindow = glfwCreateWindow(g_nWidth, g_nHeight, "CG UFPel", NULL, NULL);
 	if (g_pWindow == NULL){
 		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
@@ -173,20 +174,16 @@ int main(void)
 
 		computeMatricesFromInputs(nUseMouse, g_nWidth, g_nHeight);
 
-		manager.generateMVP(manager.getModels()->front());
-		manager.sendTransformation(manager.getModels()->front());
+		// manager.generateMVP(manager.getModels()->front());
+		// manager.sendTransformation(manager.getModels()->front());
 
 		manager.setLightPosition(glm::vec3(4, 4, 4));
 
-		manager.activateTexture(manager.getModels()->front());
-		manager.initializeMesh(manager.getMeshes()->at(manager.getModels()->front().getMeshID()));
+		// manager.activateTexture(manager.getModels()->front());
+		// manager.initializeMesh(manager.getMeshes()->at(manager.getModels()->front().getMeshID()));
 
-		manager.draw(manager.getMeshes()->front());
-
-		// Index buffer
-
-
-		// Draw the triangles !
+		// manager.draw(manager.getMeshes()->front());
+		manager.draw();
 
 		// Draw tweak bars
 		TwDraw();
@@ -199,7 +196,6 @@ int main(void)
 	while (glfwGetKey(g_pWindow, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 	       glfwWindowShouldClose(g_pWindow) == 0);
 
-	// Cleanup VBO and shader
 
 
 	// Terminate AntTweakBar and GLFW
@@ -208,4 +204,3 @@ int main(void)
 
 	return 0;
 }
-
