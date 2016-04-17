@@ -21,4 +21,6 @@ I have used Ubuntu 14.04 for the projects. For other versions the instructions s
 
 David Luebke, Benjamin Watson, Jonathan D. Cohen, Martin Reddy, and Amitabh Varshney. 2002. *Level of Detail for 3D Graphics*. Elsevier Science Inc., New York, NY, USA.
 
-OpenGL Tutorial - http://www.opengl-tutorial.org/
+OpenGL Tutorials. *Tutorial 1: Opening a Window*, Available at: http://www.opengl-tutorial.org/beginners-tutorials/tutorial-1-opening-a-window/ (Accessed: 3rd April 2016).
+
+OpenGL Tutorials. *Tutorial 3 : Matrices*, Available at: http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/ (Accessed: 17th April 2016).
