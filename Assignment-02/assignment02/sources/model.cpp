@@ -6,6 +6,7 @@
 #include <model.hpp>
 #include <mesh.hpp>
 
+/* */
 Model::Model(char * texturePath, char * textureSampler, GLuint programID, Mesh *mesh)
 {
     texture = loadDDS(texturePath);
@@ -14,48 +15,25 @@ Model::Model(char * texturePath, char * textureSampler, GLuint programID, Mesh *
 
     Model::mesh = mesh;
 
-    // matrix 4 x 4
-    modelMatrix = glm::mat4(1.0);
+    modelMatrix = glm::mat4(1.0); // 4x4 matrix (identity matrix in this case)
 }
 
+/* Default destructor */
 Model::~Model()
 {
-    glDeleteTextures(1, &texture);
+
 }
 
-glm::mat4 Model::getModelMatrix()
-{
-    return Model::modelMatrix;
-}
+/* Getters */
+glm::mat4 Model::getModelMatrix()   {   return Model::modelMatrix;  }
+GLuint Model::getModelMatrixID()    {   return Model::modelMatrixID;  }
+GLuint Model::getTexture()          {   return texture; }
+GLuint Model::getTextureID()        {   return textureID; }
 
-GLuint Model::getModelMatrixID()
-{
-    return Model::modelMatrixID;
-}
-
-GLuint Model::getTexture()
-{
-    return texture;
-}
-
-GLuint Model::getTextureID()
-{
-    return textureID;
-}
-
-// GLuint Model::getMeshID()
-// {
-//     return meshID;
-// }
-void Model::setModelMatrix(glm::mat4 matrix)
-{
-  Model::modelMatrix = matrix;
-}
-
-void Model::setModelMatrixID(GLuint modelMatrixID)
-{
-    modelMatrixID = modelMatrixID;
-}
+/* Setters */
+void Model::setModelMatrix(glm::mat4 matrix)        {  Model::modelMatrix = matrix;  }
+void Model::setModelMatrixID(GLuint modelMatrixID)  {  modelMatrixID = modelMatrixID;  }
+void Model::setTextureID(GLuint textureID)          {  textureID = textureID; }
 
 
 void Model::activateTexture()
@@ -63,41 +41,25 @@ void Model::activateTexture()
   // Bind our texture in Texture Unit 0
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, Model::texture);
-  // Set our texture to user Texture Unit 0
-  glUniform1i(Model::textureID, 0);
+  glUniform1i(Model::textureID, 0);   // set our texture to user Texture Unit 0
 }
 
+/* Calls the method to load a mesh into the buffer */
 void Model::initializeMesh()
 {
   mesh->loadMesh();
 }
 
+/* Draw the elements after activates texture and initialize the mesh */
 void Model::draw()
 {
   Model::activateTexture();
   Model::initializeMesh();
+
   glDrawElements(
-    GL_TRIANGLES,               // mode
-    mesh->getIndices()->size(), // count
-    GL_UNSIGNED_SHORT,          // type
-    (void*)0                    // element array buffer offset
+    GL_TRIANGLES,                 // mode
+    mesh->getIndices()->size(),   // count
+    GL_UNSIGNED_SHORT,            // type
+    (void*)0                      // element array buffer offset
   );
 }
-
-void Model::setTextureID(GLuint textureID)
-{
-    textureID = textureID;
-}
-
-Model::~Model()
-{
-  
-}
-
-// void Model::CleanBuffer()
-// {
-//     glDeleteBuffers(1, &vertexbuffer);
-//     glDeleteBuffers(1, &uvbuffer);
-//     glDeleteBuffers(1, &normalbuffer);
-//     glDeleteBuffers(1, &elementbuffer);
-// }

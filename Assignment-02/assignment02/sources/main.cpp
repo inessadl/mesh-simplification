@@ -166,23 +166,13 @@ int main(void)
 		// Use our shader
 		glUseProgram(manager.getProgramID());
 
-//		manager.activateTexture(manager.getModels()->front());
-
-//		manager.initializeMesh(manager.getMeshes()->at(manager.getModels()->front().getMeshID()));
 
 		// Compute the MVP matrix from keyboard and mouse input
 
 		computeMatricesFromInputs(nUseMouse, g_nWidth, g_nHeight);
 
-		// manager.generateMVP(manager.getModels()->front());
-		// manager.sendTransformation(manager.getModels()->front());
-
 		manager.setLightPosition(glm::vec3(4, 4, 4));
 
-		// manager.activateTexture(manager.getModels()->front());
-		// manager.initializeMesh(manager.getMeshes()->at(manager.getModels()->front().getMeshID()));
-
-		// manager.draw(manager.getMeshes()->front());
 		manager.draw();
 
 		// Draw tweak bars
@@ -195,7 +185,6 @@ int main(void)
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(g_pWindow, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 	       glfwWindowShouldClose(g_pWindow) == 0);
-
 
 
 	// Terminate AntTweakBar and GLFW

@@ -15,14 +15,12 @@ class Mesh
 
 private:
     std::vector<unsigned short> indices;
+
     std::vector<glm::vec3> indexed_vertices;
     std::vector<glm::vec2> indexed_uvs;
     std::vector<glm::vec3> indexed_normals;
 
-    int id;
-
-//    GLuint Texture;
-//    GLuint TextureID;
+    int id;   // Mesh identification
 
     GLuint vertexbuffer;
     GLuint uvbuffer;
@@ -30,7 +28,7 @@ private:
     GLuint elementbuffer;
 
 public:
-    Mesh(char *, int);
+    Mesh(char *);
     ~Mesh();
 
     // Getters
@@ -38,13 +36,11 @@ public:
     GLuint * getUvBuffer();
     GLuint * getNormalBuffer();
     GLuint * getElementBuffer();
-//    GLuint * getID();
-    // int getID();
 
+    std::vector<unsigned short> * getIndices() ;
     std::vector<glm::vec3> * getIndexedVertices() ;
     std::vector<glm::vec2> * getIndexedUvs() ;
     std::vector<glm::vec3> * getIndexedNormals() ;
-    std::vector<unsigned short> * getIndices() ;
 
     // Setters
     void setIndices( std::vector<unsigned short> &);
@@ -53,14 +49,9 @@ public:
     void setIndexedNormals( std::vector<glm::vec3> &);
 
     // Bind Buffers
-    void unloadMesh();
     void loadMesh();
-
-
+    void unloadMesh();
 
 };
-
-
-
 
 #endif //CG_UFPEL_MESH_H

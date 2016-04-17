@@ -32,21 +32,19 @@ public:
     ModelManager(char*, char*, char*);
     ~ModelManager();
 
-    // Getters
-    GLuint getMatrixID();
-    GLuint getViewMatrixID();
-
+    /* Getters */
+    std::vector<Mesh> * getMeshes();
+    std::vector<Model> * getModels();
     glm::mat4 getprojectionMatrix();
     glm::mat4 getviewMatrix();
 
     GLuint getVertexArrayID();
     GLuint getProgramID();
+    GLuint getMatrixID();
+    GLuint getViewMatrixID();
     GLuint getLightID();
 
-    std::vector<Mesh> * getMeshes();
-    std::vector<Model> * getModels();
-
-    // Setters
+    /* Setters */
     void setProjectionMatrix(glm::mat4);
     void setViewMatrix(glm::mat4);
     void setLightID(GLuint);
@@ -55,15 +53,15 @@ public:
     void setViewMatrixID();
 
     void setLightPosition(glm::vec3);
-    // void activateTexture(Model &);
     void createModel(Mesh &, char *, char *);
-    void loadMesh(char*);
-    // void initializeMesh(Mesh&);
-    // void unloadMesh(Mesh&);
-    // void generateMVP(Model&);
-    // void assignMatrix(Model&);
-    // void sendTransformation(Model&);
+
     void draw();
+    
+    void loadMesh(char*);
+    void unloadMesh(Mesh&);
+    void assignMatrix(Model&);
+
+
 
 };
 
