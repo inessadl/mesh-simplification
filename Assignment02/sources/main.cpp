@@ -28,7 +28,8 @@ using namespace glm;
 #include <glerror.hpp>
 #include <meshsimplification.hpp>
 
-void WindowSizeCallBack(GLFWwindow *pWindow, int nWidth, int nHeight) {
+void WindowSizeCallBack(GLFWwindow *pWindow, int nWidth, int nHeight)
+{
 
 	g_nWidth = nWidth;
 	g_nHeight = nHeight;
@@ -96,8 +97,8 @@ int main(void)
 	glfwSetInputMode(g_pWindow, GLFW_STICKY_KEYS, GL_TRUE);
 	glfwSetCursorPos(g_pWindow, g_nWidth / 2, g_nHeight / 2);
 
-	// Dark blue background
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+	// Grey background
+	glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
 
 	// Enable depth test
 	glEnable(GL_DEPTH_TEST);
