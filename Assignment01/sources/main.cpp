@@ -53,7 +53,7 @@ int main(void)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Open a window and create its OpenGL context
-	g_pWindow = glfwCreateWindow(g_nWidth, g_nHeight, "CG UFPel", NULL, NULL);
+	g_pWindow = glfwCreateWindow(g_nWidth, g_nHeight, "Assignment 01 - Mesh Simplification", NULL, NULL);
 	if (g_pWindow == NULL){
 		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
 		glfwTerminate();
@@ -84,7 +84,7 @@ int main(void)
 	glfwSetWindowSizeCallback(g_pWindow, WindowSizeCallBack);
 
 	//create the toolbar
-	g_pToolBar = TwNewBar("CG UFPel ToolBar");
+	g_pToolBar = TwNewBar("Mesh Simplification");
 	// Add 'speed' to 'bar': it is a modifable (RW) variable of type TW_TYPE_DOUBLE. Its key shortcuts are [s] and [S].
 	double speed = 0.0;
 	TwAddVarRW(g_pToolBar, "speed", TW_TYPE_DOUBLE, &speed, " label='Rot speed' min=0 max=2 step=0.01 keyIncr=s keyDecr=S help='Rotation speed (turns/second)' ");

@@ -10,7 +10,7 @@ Implement a simple mesh simplification using:
 After clone or download (and unzip) the repository go to the root and type:
 
   ```
-$ cd Assignment-01/CG_UFPel/external/glfw-3.0.3
+$ cd Assignment-01/external/glfw-3.0.3
 $ cmake .
 $ make all
 $ cd ../..
@@ -40,7 +40,7 @@ The heuristic defined for vertex removal is described on pseudo-code as follows:
 The technique chosen for vertex removal was the *Half-Edge Collapse* which works removing a vertex and reconnecting all its connections to another vertex:
 
 
- ![Half-Edge Collapse]  (https://github.com/inessadl/cg/blob/master/Assignment-01/half-edge-collapse.png)
+ ![Half-Edge Collapse]  (https://github.com/inessadl/computer-graphics/blob/master/Assignment01/images/half-edge-collapse.png)
 
 
 Pseudo-code:
