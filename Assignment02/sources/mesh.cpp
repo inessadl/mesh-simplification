@@ -45,6 +45,7 @@ Mesh::~Mesh()
 
 }
 
+/* Getters */
 GLuint * Mesh::getVertexBuffer()    {   return &vertexbuffer; }
 GLuint * Mesh::getUvBuffer()        {   return &uvbuffer;  }
 GLuint * Mesh::getNormalBuffer()    {   return &normalbuffer; }
@@ -54,6 +55,13 @@ std::vector<glm::vec3> * Mesh::getIndexedVertices() { return &indexed_vertices; 
 std::vector<glm::vec2> * Mesh::getIndexedUvs()      { return &indexed_uvs;  }
 std::vector<glm::vec3> * Mesh::getIndexedNormals()  { return &indexed_normals; }
 std::vector<unsigned short> * Mesh::getIndices()    { return &indices; }
+
+/* Setters */
+void Mesh::setIndexedVertices(std::vector<glm::vec3> &vertices)     { Mesh::indexed_vertices = vertices; }
+void Mesh::setIndexedUvs(std::vector<glm::vec2> &uvs)               { Mesh::indexed_uvs = uvs; }
+void Mesh::setIndexedNormals(std::vector<glm::vec3> &normals)       { Mesh::indexed_normals = normals; }
+void Mesh::setIndices(std::vector<unsigned short> &indices)         { Mesh::indices = indices; }
+
 
 void Mesh::loadMesh()
 {
