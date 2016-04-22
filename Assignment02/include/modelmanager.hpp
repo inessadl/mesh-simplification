@@ -37,8 +37,8 @@ public:
     GLuint getMatrixID();
     GLuint getViewMatrixID();
 
-    glm::mat4 getprojectionMatrix();
-    glm::mat4 getViewMatrix();
+//    glm::mat4 getprojectionMatrix();
+//    glm::mat4 getViewMatrix();
 
     GLuint getvertexArrayID();
     GLuint getProgramID();

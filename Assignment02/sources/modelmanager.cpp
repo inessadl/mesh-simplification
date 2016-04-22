@@ -37,8 +37,8 @@ void ModelManager::generateMVP (Model &model)
 }
 
 /* Getters */
-glm::mat4 ModelManager::getprojectionMatrix()   {  return projectionMatrix;  }
-glm::mat4 ModelManager::getViewMatrix()         {  return viewMatrix; }
+//glm::mat4 ModelManager::getprojectionMatrix()   {  return projectionMatrix;  }
+//glm::mat4 ModelManager::getViewMatrix()         {  return viewMatrix; }
 
 GLuint ModelManager::getMatrixID()              {  return matrixID;  }
 GLuint ModelManager::getViewMatrixID()          {  return viewMatrixID; }
