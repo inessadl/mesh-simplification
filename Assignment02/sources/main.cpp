@@ -7,6 +7,8 @@
 #include "meshsimplification.hpp"
 #include "mesh.hpp"
 #include "modelmanager.hpp"
+#include <controls.hpp>
+#include <glerror.hpp>
 
 // Include GLEW
 #include <GL/glew.h>
@@ -23,10 +25,8 @@ TwBar *g_pToolBar;
 // Include GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-using namespace glm;
 
-#include <controls.hpp>
-#include <glerror.hpp>
+using namespace glm;
 
 
 void TW_CALL applyTransformations(void *flag)
@@ -105,7 +105,7 @@ int main(void)
 		return -1;
 	}
 
-	check_gl_error();//OpenGL error from GLEW
+	check_gl_error(); //OpenGL error from GLEW
 
 	// Initialize the GUI
 	TwInit(TW_OPENGL_CORE, NULL);
@@ -197,8 +197,8 @@ int main(void)
 	glfwSetInputMode(g_pWindow, GLFW_STICKY_KEYS, GL_TRUE);
 	glfwSetCursorPos(g_pWindow, g_nWidth / 2, g_nHeight / 2);
 
-	// Dark blue background
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+	// Dark grey background
+	glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
 
 	// Enable depth test
 	glEnable(GL_DEPTH_TEST);
@@ -209,13 +209,12 @@ int main(void)
 	glEnable(GL_CULL_FACE);
 
 
-	modelManager manager("shaders/StandardShading.vertexshader",
+	ModelManager manager("shaders/StandardShading.vertexshader",
 	                     "shaders/StandardShading.fragmentshader",
 	                     "LightPosition_worldspace");
 
 	///MeshSimplification MS;
 	///Create and compile our GLSL program from the shaders
-
 
 	// Read our .obj file
 	manager.loadMesh("mesh/suzanne.obj");
@@ -223,10 +222,8 @@ int main(void)
 
 	glm::mat4 transformationMatrix = glm::mat4(1.0);
 
-// Load it into a VBO
-
+    // Load it into a VBO
 	glUseProgram(manager.getProgramID());
-
 
 	// For speed computation
 	double lastTime = glfwGetTime();
@@ -313,10 +310,7 @@ int main(void)
 		glUseProgram(manager.getProgramID());
 
 
-
-
-		// Compute the MVP matrix from keyboard and mouse input
-
+        // Compute the MVP matrix from keyboard and mouse input
 		computeMatricesFromInputs(nUseMouse, g_nWidth, g_nHeight);
 
 		manager.setLightPosition(glm::vec3(4, 4, 4));
@@ -334,9 +328,6 @@ int main(void)
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(g_pWindow, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 	       glfwWindowShouldClose(g_pWindow) == 0);
-
-	// Cleanup VBO and shader
-
 
 	// Terminate AntTweakBar and GLFW
 	TwTerminate();

@@ -27,7 +27,7 @@ public:
     Mesh( char *);
     ~Mesh();
 
-    //Getters
+    // Getters
     GLuint * getVertexBuffer();
     GLuint * getUvBuffer();
     GLuint * getNormalBuffer();
@@ -38,17 +38,17 @@ public:
     std::vector<unsigned short> * getIndices() ;
 
 
-    //Setters
+    // Setters
     void setIndices( std::vector<unsigned short> &);
     void setIndexedVertices( std::vector<glm::vec3> &);
     void setIndexedUvs( std::vector<glm::vec2> &);
     void setIndexedNormals( std::vector<glm::vec3> &);
 
-    //Bind Buffers
+    // Bind Buffers
     void loadMesh();
     void unloadMesh();
 
 };
 
 
-#endif //COMPGRAPHIC_MESH_HPP
+#endif

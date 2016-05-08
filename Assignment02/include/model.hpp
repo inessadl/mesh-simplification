@@ -5,7 +5,6 @@
 #ifndef ASSIGNMENT02_MODEL_HPP
 #define ASSIGNMENT02_MODEL_HPP
 
-
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 #include <vector>
@@ -22,10 +21,9 @@ class Model
     Mesh * mesh;
     std::vector<glm::mat4> transformationQueue;
 
-
     void activateTexture();
     void initializeMesh();
-    void applyTransformantion();
+    void applyTransformation();
 
 public:
 
@@ -48,4 +46,4 @@ public:
     void TW_CALL transformation(void*);
 };
 
-#endif //COMPGRAPHIC_MODEL_HPP
+#endif

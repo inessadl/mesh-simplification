@@ -9,7 +9,7 @@
 #include "mesh.hpp"
 
 
-Mesh::Mesh( char * path)
+Mesh::Mesh(char * path)
 {
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> uvs;
@@ -42,65 +42,22 @@ Mesh::~Mesh()
 
 }
 
-GLuint * Mesh::getVertexBuffer()
-{
-    return &vertexbuffer;
-}
+// Getters
+GLuint * Mesh::getVertexBuffer()    {  return &vertexbuffer;  }
+GLuint * Mesh::getUvBuffer()        {  return &uvbuffer;      }
+GLuint * Mesh::getNormalBuffer()    {  return &normalbuffer;  }
+GLuint * Mesh::getElementBuffer()   {  return &elementbuffer; }
 
-GLuint * Mesh::getUvBuffer()
-{
-    return &uvbuffer;
-}
+std::vector<glm::vec3> * Mesh::getIndexedVertices() {  return &indexed_vertices; }
+std::vector<glm::vec2> * Mesh::getIndexedUvs()      {  return &indexed_uvs;      }
+std::vector<glm::vec3> * Mesh::getIndexedNormals()  {  return &indexed_normals;  }
+std::vector<unsigned short> * Mesh::getIndices()    {  return &indices;          }
 
-GLuint * Mesh::getNormalBuffer()
-{
-    return &normalbuffer;
-}
-
-GLuint * Mesh::getElementBuffer()
-{
-    return &elementbuffer;
-}
-
-std::vector<glm::vec3> * Mesh::getIndexedVertices()
-{
-    return &indexed_vertices;
-}
-
-std::vector<glm::vec2> * Mesh::getIndexedUvs()
-{
-    return &indexed_uvs;
-}
-
-std::vector<glm::vec3> * Mesh::getIndexedNormals()
-{
-    return &indexed_normals;
-}
-
-std::vector<unsigned short> * Mesh::getIndices()
-{
-    return &indices;
-}
-
-void Mesh::setIndexedVertices( std::vector<glm::vec3> &new_vertices)
-{
-    Mesh::indexed_vertices = new_vertices;
-}
-
-void Mesh::setIndexedUvs( std::vector<glm::vec2> &new_uvs)
-{
-    Mesh::indexed_uvs = new_uvs;
-}
-
-void Mesh::setIndexedNormals( std::vector<glm::vec3> &new_normals)
-{
-    Mesh::indexed_normals = new_normals;
-}
-
-void Mesh::setIndices( std::vector<unsigned short> &new_indices)
-{
-    Mesh::indices = new_indices;
-}
+// Setters
+void Mesh::setIndexedVertices( std::vector<glm::vec3> &new_vertices)  {  Mesh::indexed_vertices = new_vertices; }
+void Mesh::setIndexedUvs( std::vector<glm::vec2> &new_uvs)            {  Mesh::indexed_uvs = new_uvs;           }
+void Mesh::setIndexedNormals( std::vector<glm::vec3> &new_normals)    {  Mesh::indexed_normals = new_normals;   }
+void Mesh::setIndices( std::vector<unsigned short> &new_indices)      {  Mesh::indices = new_indices;           }
 
 void Mesh::loadMesh()
 {

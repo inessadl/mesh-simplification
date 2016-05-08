@@ -21,41 +21,21 @@ Model::Model(char * texturePath, char * textureSampler, GLuint programID, Mesh *
     modelMatrix = glm::mat4(1.0);
 }
 
-
+/* Destructor */
 Model::~Model()
 {
 
 }
 
+// Getters
+glm::mat4 Model::getModelMatrix()   {  return Model::modelMatrix;    }
+GLuint Model::getModelMatrixID()    {  return Model::modelMatrixID;  }
+GLuint Model::getTexture()          {  return texture;               }
+GLuint Model::getTextureID()        {  return textureID;             }
 
-glm::mat4 Model::getModelMatrix()
-{
-    return Model::modelMatrix;
-}
-
-
-GLuint Model::getModelMatrixID()
-{
-    return Model::modelMatrixID;
-}
-
-
-GLuint Model::getTexture()
-{
-    return texture;
-}
-
-
-GLuint Model::getTextureID()
-{
-    return textureID;
-}
-
-
-void Model::setModelMatrixID(GLuint newModelMatrixID)
-{
-    modelMatrixID = newModelMatrixID;
-}
+// Setters
+void Model::setModelMatrixID(GLuint newModelMatrixID)   {  modelMatrixID = newModelMatrixID; }
+void Model::setTextureID(GLuint newTextureID)           {  textureID = newTextureID;         }
 
 
 void Model::activateTexture()
@@ -81,38 +61,32 @@ void Model::draw()
 
     while(!Model::transformationQueue.empty())
     {
-        Model::applyTransformantion();
+        Model::applyTransformation();
 
         glDrawElements(
-                GL_TRIANGLES,        // mode
+                GL_TRIANGLES,                    // mode
                 mesh->getIndices()->size(),      // count
-                GL_UNSIGNED_SHORT,   // type
-                (void*)0             // element array buffer offset
+                GL_UNSIGNED_SHORT,               // type
+                (void*)0                         // element array buffer offset
         );
     }
 
     glDrawElements(
-            GL_TRIANGLES,        // mode
-            mesh->getIndices()->size(),      // count
-            GL_UNSIGNED_SHORT,   // type
-            (void*)0             // element array buffer offset
+            GL_TRIANGLES,                       // mode
+            mesh->getIndices()->size(),         // count
+            GL_UNSIGNED_SHORT,                  // type
+            (void*)0                            // element array buffer offset
     );
 }
 
-
-void Model::setTextureID(GLuint newTextureID)
-{
-    textureID = newTextureID;
-}
-
-
+/* Queue for the transformations */
 void Model::queueTransformation(glm::mat4 transformation)
 {
     transformationQueue.push_back(transformation);
 }
 
-
-void Model::applyTransformantion()
+/* Applies the transformations previously selected */
+void Model::applyTransformation()
 {
     glm::mat4 operation = transformationQueue.front();
     transformationQueue.erase(transformationQueue.begin());

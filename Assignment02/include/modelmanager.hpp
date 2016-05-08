@@ -5,13 +5,12 @@
 #ifndef ASSIGNMENT02_MODELMANAGER_H
 #define ASSIGNMENT02_MODELMANAGER_H
 
-
 #include <glm/glm.hpp>
 #include <vector>
 #include "model.hpp"
 #include "mesh.hpp"
 
-class modelManager
+class ModelManager
 {
 
     std::vector<Mesh> meshes;
@@ -30,8 +29,8 @@ class modelManager
     void initializeMesh(Mesh&);
 
 public:
-    modelManager(char*, char*, char*);
-    ~modelManager();
+    ModelManager(char*, char*, char*);
+    ~ModelManager();
 
     // Getters
     GLuint getMatrixID();
@@ -63,7 +62,6 @@ public:
 
     void draw();
 
-
 };
 
-#endif //COMPGRAPHIC_MODEL_MANAGER_HPP
+#endif
