@@ -195,8 +195,18 @@ int main(void)
 		// Compute the MVP matrix from keyboard and mouse input
 		computeMatricesFromInputs(nUseMouse, g_nWidth, g_nHeight);
 		glm::mat4 ProjectionMatrix = getProjectionMatrix();
-		glm::mat4 ViewMatrix       = getViewMatrix();
+		glm::mat4 ViewMatrix       = getViewMatrix();				// getViewMatrix pega a matrix centrada na origem
 		glm::mat4 ModelMatrix      = glm::mat4(1.0);
+
+		// lookAt indica para onde a câmera está olhando (direções)
+		// onde a câmera está situada e para onde está olhando
+		ViewMatrix = glm::lookAt(
+				glm::vec3(0.f, 0.f, 0.f),		 // origin (x,y,z)
+				glm::vec3(0.f, 0.f, 0.f),		 // look
+				glm::vec3(0.0f, 1.0f, 0.0f)	 // up
+		);
+
+		// Model View Projection
 		glm::mat4 MVP              = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
 		// Send our transformation to the currently bound shader,
@@ -291,4 +301,3 @@ int main(void)
 
 	return 0;
 }
-
