@@ -1,8 +1,0 @@
-C:/Users/Inessa/Documents/Prova1/Questao_3/external/CMakeFiles/ANTTWEAKBAR_116_OGLCORE_GLFW.dir
-C:/Users/Inessa/Documents/Prova1/Questao_3/external/assimp-3.0.1270/contrib/zlib/CMakeFiles/zlib.dir
-C:/Users/Inessa/Documents/Prova1/Questao_3/external/assimp-3.0.1270/code/CMakeFiles/assimp.dir
-C:/Users/Inessa/Documents/Prova1/Questao_3/external/glfw-3.0.3/CMakeFiles/ALL_BUILD.dir
-C:/Users/Inessa/Documents/Prova1/Questao_3/CMakeFiles/CG_UFPel.dir
-C:/Users/Inessa/Documents/Prova1/Questao_3/external/CMakeFiles/GLEW_190.dir
-C:/Users/Inessa/Documents/Prova1/Questao_3/CMakeFiles/ZERO_CHECK.dir
-C:/Users/Inessa/Documents/Prova1/Questao_3/external/glfw-3.0.3/src/CMakeFiles/GLFW_303.dir
