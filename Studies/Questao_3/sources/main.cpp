@@ -53,7 +53,7 @@ int main(void)
 
 	// Open a window and create its OpenGL context
 	g_pWindow = glfwCreateWindow(g_nWidth, g_nHeight, "CG UFPel", NULL, NULL);
-	if (g_pWindow == NULL){
+	if (g_pWindow == NULL) {
 		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
 		glfwTerminate();
 		return -1;
@@ -70,7 +70,7 @@ int main(void)
 
 	check_gl_error();//OpenGL error from GLEW
 
-	// Initialize the GUI
+					 // Initialize the GUI
 	TwInit(TW_OPENGL_CORE, NULL);
 	TwWindowSize(g_nWidth, g_nHeight);
 
@@ -95,8 +95,8 @@ int main(void)
 	glfwSetInputMode(g_pWindow, GLFW_STICKY_KEYS, GL_TRUE);
 	glfwSetCursorPos(g_pWindow, g_nWidth / 2, g_nHeight / 2);
 
-	// Dark blue background
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+	// Dark grey background
+	glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
 
 	// Enable depth test
 	glEnable(GL_DEPTH_TEST);
@@ -114,8 +114,8 @@ int main(void)
 	GLuint programID = LoadShaders("shaders/StandardShading.vertexshader", "shaders/StandardShading.fragmentshader");
 
 	// Get a handle for our "MVP" uniform
-	GLuint MatrixID      = glGetUniformLocation(programID, "MVP");
-	GLuint ViewMatrixID  = glGetUniformLocation(programID, "V");
+	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
+	GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
 	GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
 
 	// Load the texture
@@ -165,24 +165,29 @@ int main(void)
 
 	// For speed computation
 	double lastTime = glfwGetTime();
-	int nbFrames    = 0;
+	int nbFrames = 0;
 
-	do{
-        check_gl_error();
+	// create lastAnimation
+	// numero  de segundos do programa
+	double lastAnimation = glfwGetTime(); // onde inicia a animacao
 
-        //use the control key to free the mouse
+	do
+	{
+		check_gl_error();
+
+		//use the control key to free the mouse
 		if (glfwGetKey(g_pWindow, GLFW_KEY_LEFT_CONTROL) != GLFW_PRESS)
-			nUseMouse = 1;
-		else
 			nUseMouse = 0;
+		else
+			nUseMouse = 1;
 
 		// Measure speed
 		double currentTime = glfwGetTime();
 		nbFrames++;
-		if (currentTime - lastTime >= 1.0){ // If last prinf() was more than 1sec ago
-			// printf and reset
+		if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1sec ago
+											 // printf and reset
 			printf("%f ms/frame\n", 1000.0 / double(nbFrames));
-			nbFrames  = 0;
+			nbFrames = 0;
 			lastTime += 1.0;
 		}
 
@@ -195,9 +200,12 @@ int main(void)
 		// Compute the MVP matrix from keyboard and mouse input
 		computeMatricesFromInputs(nUseMouse, g_nWidth, g_nHeight);
 		glm::mat4 ProjectionMatrix = getProjectionMatrix();
-		glm::mat4 ViewMatrix       = getViewMatrix();
-		glm::mat4 ModelMatrix      = glm::mat4(1.0);
-		glm::mat4 MVP              = ProjectionMatrix * ViewMatrix * ModelMatrix;
+		glm::mat4 ViewMatrix = getViewMatrix();
+		glm::mat4 ModelMatrix = glm::mat4(1.0);
+
+
+		// primeira operação 
+		glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
 		// Send our transformation to the currently bound shader,
 		// in the "MVP" uniform
@@ -224,7 +232,7 @@ int main(void)
 			GL_FALSE,           // normalized?
 			0,                  // stride
 			(void*)0            // array buffer offset
-			);
+		);
 
 		// 2nd attribute buffer : UVs
 		glEnableVertexAttribArray(1);
@@ -236,7 +244,7 @@ int main(void)
 			GL_FALSE,                         // normalized?
 			0,                                // stride
 			(void*)0                          // array buffer offset
-			);
+		);
 
 		// 3rd attribute buffer : normals
 		glEnableVertexAttribArray(2);
@@ -248,18 +256,51 @@ int main(void)
 			GL_FALSE,                         // normalized?
 			0,                                // stride
 			(void*)0                          // array buffer offset
-			);
+		);
 
 		// Index buffer
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
-		// Draw the triangles !
+
+		// Desenha o primeiro macaco
 		glDrawElements(
 			GL_TRIANGLES,        // mode
 			indices.size(),      // count
 			GL_UNSIGNED_SHORT,   // type
 			(void*)0             // element array buffer offset
-			);
+		);
+
+
+		// Realiza transformações na matrix do modelo para desenhá-lo em outra posição
+		// /5 pois é em 5 segundos
+		ModelMatrix = glm::rotate(ModelMatrix, (float)(((currentTime - lastAnimation) * 360) / 5), glm::vec3(0, 1, 0));
+
+		ModelMatrix = glm::translate(ModelMatrix, glm::vec3(3, 0, 0)) * glm::rotate(mat4(1.0), glm::degrees(-90.0f), glm::vec3(0, 1, 0));
+
+		// se passou 5 segundos, atualiza lastAnimation - inicia uma nova animacao
+		if ((currentTime - lastAnimation) > 5)
+		{
+			lastAnimation = glfwGetTime();
+		}
+
+		MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+
+
+
+		// Send our transformation to the currently bound shader,
+		// in the "MVP" uniform
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
+		glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
+
+		// Desenha o segundo macaco
+		glDrawElements(
+			GL_TRIANGLES,        // mode
+			indices.size(),      // count
+			GL_UNSIGNED_SHORT,   // type
+			(void*)0             // element array buffer offset
+		);
+
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
@@ -274,7 +315,7 @@ int main(void)
 
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(g_pWindow, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-	glfwWindowShouldClose(g_pWindow) == 0);
+		glfwWindowShouldClose(g_pWindow) == 0);
 
 	// Cleanup VBO and shader
 	glDeleteBuffers(1, &vertexbuffer);
