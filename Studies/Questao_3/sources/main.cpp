@@ -128,6 +128,10 @@ int main(void)
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> normals;
+
+	// Carrega o objeto do macaco para o buffer -> carregado apenas uma vez 
+	// sempre que for ser desenhado o macaco, será acessado esse objeto para
+	// então aplicar as transformações e fazer o desenho.
 	bool res = loadOBJ("mesh/suzanne.obj", vertices, uvs, normals);
 
 	std::vector<unsigned short> indices;
@@ -201,10 +205,10 @@ int main(void)
 		computeMatricesFromInputs(nUseMouse, g_nWidth, g_nHeight);
 		glm::mat4 ProjectionMatrix = getProjectionMatrix();
 		glm::mat4 ViewMatrix = getViewMatrix();
-		glm::mat4 ModelMatrix = glm::mat4(1.0);
-
-
-		// primeira operação 
+		glm::mat4 ModelMatrix = glm::mat4(1.0);		// -> matriz identidade
+		
+		// primeira operação sobre os dados - para primeiro desenho do macaco
+		// -> centrado na origem
 		glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
 		// Send our transformation to the currently bound shader,
@@ -271,10 +275,9 @@ int main(void)
 		);
 
 
-		// Realiza transformações na matrix do modelo para desenhá-lo em outra posição
+		// Realiza transformações na matriz do modelo para desenhá-lo em outra posição
 		// /5 pois é em 5 segundos
 		ModelMatrix = glm::rotate(ModelMatrix, (float)(((currentTime - lastAnimation) * 360) / 5), glm::vec3(0, 1, 0));
-
 		ModelMatrix = glm::translate(ModelMatrix, glm::vec3(3, 0, 0)) * glm::rotate(mat4(1.0), glm::degrees(-90.0f), glm::vec3(0, 1, 0));
 
 		// se passou 5 segundos, atualiza lastAnimation - inicia uma nova animacao
@@ -300,6 +303,42 @@ int main(void)
 			GL_UNSIGNED_SHORT,   // type
 			(void*)0             // element array buffer offset
 		);
+
+
+
+		// ------------ TERCEIRO MACACO -----------------
+
+		// Transformações para o terceiro macaco																vec3 = x,y,z	
+		ModelMatrix = glm::rotate(glm::mat4(1.0), (float)(270.0), glm::vec3(0, 1, 0));
+		ModelMatrix = glm::translate(ModelMatrix, glm::vec3(0, 0, 3));
+
+		// se passou 5 segundos, atualiza lastAnimation - inicia uma nova animacao
+		/*if ((currentTime - lastAnimation) > 5)
+		{
+			lastAnimation = glfwGetTime();
+		}*/
+
+		//ModelMatrix = glm::rotate(glm::mat4(1.0), (float)(45.0), glm::vec3(0, 1, 0));
+
+		MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+
+
+		// Send our transformation to the currently bound shader,
+		// in the "MVP" uniform
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
+		glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
+
+		// Desenha o terceiro macaco
+		glDrawElements(
+			GL_TRIANGLES,        // mode
+			indices.size(),      // count
+			GL_UNSIGNED_SHORT,   // type
+			(void*)0             // element array buffer offset
+		);
+
+
+
 
 
 		glDisableVertexAttribArray(0);
