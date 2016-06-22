@@ -125,25 +125,41 @@ int main(void)
 	GLuint TextureID = glGetUniformLocation(programID, "myTextureSampler");
 
 	// Read our .obj file
+//	definições para o pato
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> normals;
+
+//	definições para a roda
+	std::vector<glm::vec3> vertices_roda;
+	std::vector<glm::vec2> uvs_roda;
+	std::vector<glm::vec3> normals_roda;
 
 	// Carrega o objeto do macaco para o buffer -> carregado apenas uma vez 
 	// sempre que for ser desenhado o macaco, ser� acessado esse objeto para
 	// ent�o aplicar as transforma��es e fazer o desenho.
 //	bool res = loadOBJ("mesh/suzanne.obj", vertices, uvs, normals);
-	bool res = loadOBJ("mesh/wheel.obj", vertices, uvs, normals);
-	bool coin = loadOBJ("mesh/goose.obj", vertices, uvs, normals);
+	bool res = loadOBJ("mesh/goose.obj", vertices, uvs, normals);
+	bool roda = loadOBJ("mesh/wheel.obj", vertices_roda, uvs_roda, normals_roda);
 
 	std::vector<unsigned short> indices;
 	std::vector<glm::vec3> indexed_vertices;
 	std::vector<glm::vec2> indexed_uvs;
 	std::vector<glm::vec3> indexed_normals;
+
+	std::vector<unsigned short> indices_roda;
+	std::vector<glm::vec3> indexed_vertices_roda;
+	std::vector<glm::vec2> indexed_uvs_roda;
+	std::vector<glm::vec3> indexed_normals_roda;
+
+
 	indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
+//	indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
+
+
 
 	// Load it into a VBO
-
+	// GOOSE
 	GLuint vertexbuffer;
 	glGenBuffers(1, &vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -164,6 +180,30 @@ int main(void)
 	glGenBuffers(1, &elementbuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
+
+	// WHEEL
+	GLuint vertexbuffer_roda;
+	glGenBuffers(1, &vertexbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+	glBufferData(GL_ARRAY_BUFFER, indexed_vertices.size() * sizeof(glm::vec3), &indexed_vertices[0], GL_STATIC_DRAW);
+
+	GLuint uvbuffer_roda;
+	glGenBuffers(1, &uvbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
+	glBufferData(GL_ARRAY_BUFFER, indexed_uvs.size() * sizeof(glm::vec2), &indexed_uvs[0], GL_STATIC_DRAW);
+
+	GLuint normalbuffer_roda;
+	glGenBuffers(1, &normalbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+	glBufferData(GL_ARRAY_BUFFER, indexed_normals.size() * sizeof(glm::vec3), &indexed_normals[0], GL_STATIC_DRAW);
+
+	// Generate a buffer for the indices as well
+	GLuint elementbuffer_roda;
+	glGenBuffers(1, &elementbuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
+
+
 
 	// Get a handle for our "LightPosition" uniform
 	glUseProgram(programID);
@@ -268,7 +308,7 @@ int main(void)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
 
-		// Desenha o primeiro macaco
+		// Desenha o primeiro ganso
 		glDrawElements(
 			GL_TRIANGLES,        // mode
 			indices.size(),      // count
@@ -277,8 +317,58 @@ int main(void)
 		);
 
 
-		// Realiza transforma��es na matriz do modelo para desenh�-lo em outra posi��o
-		// /5 pois � em 5 segundos
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// 1rst attribute buffer : vertices
+		glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer_roda);
+		glVertexAttribPointer(
+				0,                  // attribute
+				3,                  // size
+				GL_FLOAT,           // type
+				GL_FALSE,           // normalized?
+				0,                  // stride
+				(void*)0            // array buffer offset
+		);
+
+		// 2nd attribute buffer : UVs
+		glEnableVertexAttribArray(1);
+		glBindBuffer(GL_ARRAY_BUFFER, uvbuffer_roda);
+		glVertexAttribPointer(
+				1,                                // attribute
+				2,                                // size
+				GL_FLOAT,                         // type
+				GL_FALSE,                         // normalized?
+				0,                                // stride
+				(void*)0                          // array buffer offset
+		);
+
+		// 3rd attribute buffer : normals
+		glEnableVertexAttribArray(2);
+		glBindBuffer(GL_ARRAY_BUFFER, normalbuffer_roda);
+		glVertexAttribPointer(
+				2,                                // attribute
+				3,                                // size
+				GL_FLOAT,                         // type
+				GL_FALSE,                         // normalized?
+				0,                                // stride
+				(void*)0                          // array buffer offset
+		);
+
+		// Index buffer
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer_roda);
+
+
+		// Desenha o primeiro macaco
+		glDrawElements(
+				GL_TRIANGLES,        // mode
+				indices.size(),      // count
+				GL_UNSIGNED_SHORT,   // type
+				(void*)0             // element array buffer offset
+		);
+
+
+		// Realiza transformaes na matriz do modelo para desenha-lo em outra posicao
+		// /5 pois eh em 5 segundos
 		ModelMatrix = glm::rotate(ModelMatrix, (float)(((currentTime - lastAnimation) * 360) / 5), glm::vec3(0, 1, 0));
 		ModelMatrix = glm::translate(ModelMatrix, glm::vec3(3, 0, 0)) * glm::rotate(mat4(1.0), glm::degrees(-90.0f), glm::vec3(0, 1, 0));
 
@@ -298,6 +388,7 @@ int main(void)
 		glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
 		glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
 
+		// ------------ SEGUNDO GANSO -----------------
 		// Desenha o segundo macaco
 		glDrawElements(
 			GL_TRIANGLES,        // mode
@@ -308,9 +399,9 @@ int main(void)
 
 
 
-		// ------------ TERCEIRO MACACO -----------------
+		// ------------ TERCEIRO GANSO -----------------
 
-		// Transforma��es para o terceiro macaco																vec3 = x,y,z	
+		// Transformacoes para o terceiro macaco				vec3 = x,y,z
 		ModelMatrix = glm::rotate(glm::mat4(1.0), (float)(270.0), glm::vec3(0, 1, 0));
 		ModelMatrix = glm::translate(ModelMatrix, glm::vec3(0, 0, 3));
 
