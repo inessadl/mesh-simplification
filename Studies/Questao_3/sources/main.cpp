@@ -111,7 +111,7 @@ int main(void)
 	glBindVertexArray(VertexArrayID);
 
 	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders("shaders/StandardShading.vertexshader", "shaders/StandardShading.fragmentshader");
+	GLuint programID = LoadShaders("shaders/ShadowMapping_SimpleVersion.vertexshader", "shaders/ShadowMapping_SimpleVersion.fragmentshader");
 
 	// Get a handle for our "MVP" uniform
 	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
@@ -130,9 +130,11 @@ int main(void)
 	std::vector<glm::vec3> normals;
 
 	// Carrega o objeto do macaco para o buffer -> carregado apenas uma vez 
-	// sempre que for ser desenhado o macaco, será acessado esse objeto para
-	// então aplicar as transformações e fazer o desenho.
-	bool res = loadOBJ("mesh/suzanne.obj", vertices, uvs, normals);
+	// sempre que for ser desenhado o macaco, serï¿½ acessado esse objeto para
+	// entï¿½o aplicar as transformaï¿½ï¿½es e fazer o desenho.
+//	bool res = loadOBJ("mesh/suzanne.obj", vertices, uvs, normals);
+	bool res = loadOBJ("mesh/wheel.obj", vertices, uvs, normals);
+	bool coin = loadOBJ("mesh/goose.obj", vertices, uvs, normals);
 
 	std::vector<unsigned short> indices;
 	std::vector<glm::vec3> indexed_vertices;
@@ -207,7 +209,7 @@ int main(void)
 		glm::mat4 ViewMatrix = getViewMatrix();
 		glm::mat4 ModelMatrix = glm::mat4(1.0);		// -> matriz identidade
 		
-		// primeira operação sobre os dados - para primeiro desenho do macaco
+		// primeira operaï¿½ï¿½o sobre os dados - para primeiro desenho do macaco
 		// -> centrado na origem
 		glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
@@ -275,8 +277,8 @@ int main(void)
 		);
 
 
-		// Realiza transformações na matriz do modelo para desenhá-lo em outra posição
-		// /5 pois é em 5 segundos
+		// Realiza transformaï¿½ï¿½es na matriz do modelo para desenhï¿½-lo em outra posiï¿½ï¿½o
+		// /5 pois ï¿½ em 5 segundos
 		ModelMatrix = glm::rotate(ModelMatrix, (float)(((currentTime - lastAnimation) * 360) / 5), glm::vec3(0, 1, 0));
 		ModelMatrix = glm::translate(ModelMatrix, glm::vec3(3, 0, 0)) * glm::rotate(mat4(1.0), glm::degrees(-90.0f), glm::vec3(0, 1, 0));
 
@@ -308,7 +310,7 @@ int main(void)
 
 		// ------------ TERCEIRO MACACO -----------------
 
-		// Transformações para o terceiro macaco																vec3 = x,y,z	
+		// Transformaï¿½ï¿½es para o terceiro macaco																vec3 = x,y,z	
 		ModelMatrix = glm::rotate(glm::mat4(1.0), (float)(270.0), glm::vec3(0, 1, 0));
 		ModelMatrix = glm::translate(ModelMatrix, glm::vec3(0, 0, 3));
 
